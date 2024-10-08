@@ -1,0 +1,10 @@
+<div>
+    <h1>Restaurants</h1>
+    @for (restaurant of restaurants; track restaurant.id) {
+    <div>
+        <h2>{{ restaurant.name }}</h2>
+        <p>{{ restaurant.description }}</p>
+        <p>{{ restaurant.location }}</p>
+    </div>
+    }
+</div>
