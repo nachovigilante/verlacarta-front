@@ -56,6 +56,10 @@
     <input  id="logo" type="file" (change)="onLogoSelected($event)" accept="image/*" required>
   </div>
 
+  <div *ngIf="logo">
+      <img [src]="logo" alt="Restaurant Logo" style="max-width: 200px; max-height: 200px; margin-top: 10px;"/>
+  </div>
+
   <mat-form-field appearance="fill">
     <mat-label>Descripción</mat-label>
     <textarea matInput formControlName="description"></textarea>

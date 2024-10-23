@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -29,10 +29,10 @@ import {MatButtonModule} from '@angular/material/button';
 })
 export class CreateRestaurantComponent {
   restaurantForm: FormGroup;
-  logo: File | null = null;
+  logo: string | null = null;
   locationService: any;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) {
     this.restaurantForm = this.fb.group({
       name: ['', Validators.required],
       direction:['', Validators.required],
@@ -70,9 +70,22 @@ export class CreateRestaurantComponent {
   onLogoSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.logo = input.files[0];
+        const file = input.files[0];
+        if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const base64String = (e.target?.result as string) || '';
+                this.restaurantForm.get('logo')?.setValue(base64String); 
+                this.logo = base64String; 
+                this.cd.detectChanges();
+            };
+            reader.readAsDataURL(file); 
+        } else {
+            console.error('Selected file is not an image.');
+        }
     }
-  }
+}
+
 
   onSubmit() {
     if (this.restaurantForm.valid) {
