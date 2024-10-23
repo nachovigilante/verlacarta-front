@@ -35,7 +35,7 @@ export class CreateRestaurantComponent {
   constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) {
     this.restaurantForm = this.fb.group({
       name: ['', Validators.required],
-      direction:['', Validators.required],
+      location:['', Validators.required],
       contactEmail: ['', [Validators.required, Validators.email, this.emailValidator]],
       contactPhone: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       menu: ['', Validators.required],
