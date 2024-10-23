@@ -21,7 +21,7 @@ header .container {
         .info {
             display: flex;
             align-items: center;
-            gap: 2px;
+            gap: 5px;
 
             img {
                 height: 16px;
@@ -29,7 +29,7 @@ header .container {
 
             span {
                 font-size: 12px;
-                font-weight: 600;
+                font-weight: bold;
                 color: black;
             }
         }
