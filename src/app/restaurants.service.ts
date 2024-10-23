@@ -14,10 +14,10 @@ export interface Restaurant {
 })
 export class RestaurantsService {
     // Back local
-    // url = "http://localhost:3000/restaurants"
+     url = "http://localhost:3000/restaurants"
 
     // Back hosteado
-    url = 'https://verlacarta-back.vercel.app/restaurants';
+    //url = 'https://verlacarta-back.vercel.app/restaurants';
 
     constructor() {}
 
