@@ -6,10 +6,11 @@ import { AbstractControl, ReactiveFormsModule, ValidationErrors, ValidatorFn } f
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HeaderComponent } from '../header/header.component';
 import { CommonModule } from '@angular/common';
-import { LocationService, Position } from '../location.service'; 
-import {MatIconModule} from '@angular/material/icon';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatButtonModule} from '@angular/material/button';
+import { LocationService, Position } from '../location.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
+import { Restaurant, RestaurantsService } from '../restaurants.service';
 
 @Component({
   selector: 'app-create-restaurant',
@@ -21,7 +22,7 @@ import {MatButtonModule} from '@angular/material/button';
     HeaderComponent,
     ReactiveFormsModule,
     CommonModule,
-    MatButtonModule, MatDividerModule, MatIconModule
+    MatButtonModule, MatDividerModule, MatIconModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './create-restaurant.component.html',
@@ -32,20 +33,20 @@ export class CreateRestaurantComponent {
   logo: string | null = null;
   locationService: any;
 
-  constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) {
+  constructor(private fb: FormBuilder, private cd: ChangeDetectorRef, private restaurantService: RestaurantsService) {
     this.restaurantForm = this.fb.group({
       name: ['', Validators.required],
-      location:['', Validators.required],
+      location: ['', Validators.required],
       contactEmail: ['', [Validators.required, Validators.email, this.emailValidator]],
-      contactPhone: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      contactPhone: ['', [ Validators.pattern(/^\d+$/)]],
       menu: ['', Validators.required],
-      openTime: ['', Validators.required],
-      closeTime: ['', Validators.required],
+      openTime: ['', ],
+      closeTime: ['',],
       tables: ['', [Validators.required, Validators.min(1)]],
       pickup: [false],
       logo: [''],
       description: [''],
-     
+
     }, { validators: this.timeValidator });
   }
 
@@ -56,10 +57,10 @@ export class CreateRestaurantComponent {
 
     if (openTime && closeTime) {
       if (openTime >= closeTime) {
-        return { timeMismatch: true }; 
+        return { timeMismatch: true };
       }
     }
-    return null; 
+    return null;
   }
   emailValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email pattern
@@ -70,30 +71,43 @@ export class CreateRestaurantComponent {
   onLogoSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-        const file = input.files[0];
-        if (file.type.startsWith('image/')) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const base64String = (e.target?.result as string) || '';
-                this.restaurantForm.get('logo')?.setValue(base64String); 
-                this.logo = base64String; 
-                this.cd.detectChanges();
-            };
-            reader.readAsDataURL(file); 
-        } else {
-            console.error('Selected file is not an image.');
-        }
+      const file = input.files[0];
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const base64String = (e.target?.result as string) || '';
+          this.restaurantForm.get('logo')?.setValue(base64String);
+          this.logo = base64String;
+          this.cd.detectChanges();
+        };
+        reader.readAsDataURL(file);
+      } else {
+        console.error('Selected file is not an image.');
+      }
     }
-}
+  }
 
 
   onSubmit() {
+    console.log(this.restaurantForm.value);
     if (this.restaurantForm.valid) {
-      const formValue = this.restaurantForm.value;
-      console.log(formValue);
+      this.restaurantService.createRestaurant(
+        this.restaurantForm.value.name,
+        this.restaurantForm.value.location,
+        this.restaurantForm.value.tables,
+        this.restaurantForm.value.logo,
+        this.restaurantForm.value.menu
+      ).then((response: any) => {
+        console.log('Restaurant created:', response);
+        this.restaurantForm.reset();
+        
+      }).catch((err: any) => {
+        console.error('Error creating restaurant:', err);
+      });
     } else {
-      console.log(this.restaurantForm)
+      console.log(this.restaurantForm);
       console.log("Form is invalid");
     }
   }
+
 }
