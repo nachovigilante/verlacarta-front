@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../environments/environment';
 
 export interface Restaurant {
     id: string;
@@ -22,7 +23,7 @@ export class RestaurantsService {
     constructor() {}
 
     async getRestaurants() {
-        return fetch(this.url)
+        return fetch(environment.backendUrl + '/restaurants')
             .then((response) => response.json())
             .then((data) => data);
     }
