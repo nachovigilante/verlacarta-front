@@ -43,3 +43,5 @@ Thumbs.db
 
 **/*/enviroment.ts
 **/*/.env
+
+pnpm-lock.yaml
