@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../environments/environment';
 
 export interface Restaurant {
     id: string;
@@ -14,15 +15,15 @@ export interface Restaurant {
 })
 export class RestaurantsService {
     // Back local
-    url = "http://localhost:3000/restaurants"
+    //url = "http://localhost:3000/restaurants"
 
     // Back hosteado
     //url = 'https://verlacarta-back.vercel.app/restaurants';
 
-    constructor() { }
+    constructor() {}
 
     async getRestaurants() {
-        return fetch(this.url)
+        return fetch(environment.backendUrl + '/restaurants')
             .then((response) => response.json())
             .then((data) => data);
     }
