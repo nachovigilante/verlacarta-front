@@ -14,12 +14,6 @@ export interface Restaurant {
     providedIn: 'root',
 })
 export class RestaurantsService {
-    // Back local
-     url = "http://localhost:3000/restaurants"
-
-    // Back hosteado
-    //url = 'https://verlacarta-back.vercel.app/restaurants';
-
     constructor() {}
 
     async getRestaurants() {
