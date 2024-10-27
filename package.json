@@ -24,6 +24,7 @@
     "@types/node": "^22.7.8",
     "dotenv": "^16.4.5",
     "fs": "0.0.1-security",
+    "ng2-pdf-viewer": "^10.3.3",
     "prettier": "^3.3.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

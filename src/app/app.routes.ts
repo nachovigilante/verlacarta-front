@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { CreateRestaurantComponent } from './create-restaurant/create-restaurant.component';
 import { RestaurantsListComponent } from './restaurants-list/restaurants-list.component';
+import { MenuComponent } from './menu/menu.component';
 
 export const routes: Routes = [
     {
@@ -13,4 +14,7 @@ export const routes: Routes = [
         canActivate: [],
         data: {},
     },
+    { path: "menu",
+        component: MenuComponent
+    }
 ];
