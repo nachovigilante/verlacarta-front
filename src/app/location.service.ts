@@ -51,4 +51,19 @@ export class LocationService {
 
         return `${address}, ${city}`;
     }
+
+    distanceBetween(position1: Position, position2: Position) {
+        const R = 6371e3; // Earth radius in meters
+        const φ1 = (position1.lat * Math.PI) / 180;
+        const φ2 = (position2.lat * Math.PI) / 180;
+        const Δφ = ((position2.lat - position1.lat) * Math.PI) / 180;
+        const Δλ = ((position2.lng - position1.lng) * Math.PI) / 180;
+
+        const a =
+            Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+            Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return R * c;
+    }
 }
