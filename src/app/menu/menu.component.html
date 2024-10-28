@@ -1,7 +1,11 @@
 <main class="pdf-container">
     <h2>Visualizador de MENU</h2>
+    
     <pdf-viewer
-        src="https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf"
+    [src]="menuPdfUrl" 
         id="viewer"
     ></pdf-viewer>
+    <div class="order-button-container">
+        <button >Realizar Pedido - Mesa {{ tableNumber? tableNumber : null }}</button>
+      </div>
 </main>
