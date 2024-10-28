@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { LocationService } from '../location.service';
 import { environment } from '../../environments/environment';
-import 'mapbox-gl/dist/mapbox-gl.css';
+// import 'mapbox-gl/dist/mapbox-gl.css';
 import { Restaurant } from '../restaurants.service';
 
 @Component({
