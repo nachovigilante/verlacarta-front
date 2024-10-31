@@ -22,7 +22,13 @@ export class RestaurantsService {
             .then((data) => data);
     }
 
-    async createRestaurant(name: string, location: string, tables: number, logo: string, menu: string): Promise<Restaurant | null> {
+    async createRestaurant(
+        name: string,
+        location: string,
+        tables: number,
+        logo: string,
+        menu: string,
+    ): Promise<Restaurant | null> {
         const restaurantData = {
             name,
             location,
@@ -35,7 +41,7 @@ export class RestaurantsService {
             const response = await fetch(environment.backendUrl, {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json',
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(restaurantData),
             });
@@ -43,7 +49,10 @@ export class RestaurantsService {
             if (response.ok) {
                 return response.json();
             } else {
-                console.error('Failed to create restaurant:', response.statusText);
+                console.error(
+                    'Failed to create restaurant:',
+                    response.statusText,
+                );
                 return null;
             }
         } catch (error) {
@@ -54,12 +63,17 @@ export class RestaurantsService {
 
     async getRestaurantById(id: string): Promise<Restaurant | null> {
         try {
-            const response = await fetch(`${environment.backendUrl}/restaurants/${id}`);
-            
+            const response = await fetch(
+                `${environment.backendUrl}/restaurants/${id}`,
+            );
+
             if (response.ok) {
                 return response.json();
             } else {
-                console.error(`Failed to fetch restaurant with id ${id}:`, response.statusText);
+                console.error(
+                    `Failed to fetch restaurant with id ${id}:`,
+                    response.statusText,
+                );
                 return null;
             }
         } catch (error) {
@@ -67,5 +81,4 @@ export class RestaurantsService {
             return null;
         }
     }
-
 }

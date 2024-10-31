@@ -68,7 +68,7 @@ export class MapComponent {
 
         for (const restaurant of this.restaurants) {
             const location = restaurant.location.split(',');
-            
+
             const geojson = {
                 type: 'FeatureCollection',
                 features: [
@@ -76,7 +76,10 @@ export class MapComponent {
                         type: 'Feature',
                         geometry: {
                             type: 'Point',
-                            coordinates: [parseFloat(location[1]), parseFloat(location[0])],
+                            coordinates: [
+                                parseFloat(location[1]),
+                                parseFloat(location[0]),
+                            ],
                         },
                         properties: {
                             title: restaurant.name,
@@ -88,7 +91,9 @@ export class MapComponent {
 
             for (const point of geojson.features) {
                 new mapboxgl.Marker()
-                    .setLngLat(point.geometry.coordinates as mapboxgl.LngLatLike)
+                    .setLngLat(
+                        point.geometry.coordinates as mapboxgl.LngLatLike,
+                    )
                     .setPopup(
                         new mapboxgl.Popup({ offset: 25 }) // add popups
                             .setHTML(

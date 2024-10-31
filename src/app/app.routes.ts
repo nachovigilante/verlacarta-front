@@ -14,7 +14,7 @@ export const routes: Routes = [
         canActivate: [],
         data: {},
     },
-   
+
     { path: 'menu/:id/:tableNumber', component: MenuComponent },
-    { path: 'menu/:id', component: MenuComponent }
+    { path: 'menu/:id', component: MenuComponent },
 ];
