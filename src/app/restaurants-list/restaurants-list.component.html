@@ -1,8 +1,25 @@
 <div class="container">
-    <h2>Restaurantes cercanos a vos</h2>
-    <button (click)="toggleMode()">{{ mode }}</button>
+    <div class="title">
+        <h2>Restaurantes cercanos a vos</h2>
+        <button (click)="toggleMode()">
+            @if (mode === 'list') {
+            <mat-icon aria-hidden="false" aria-label="Map icon" fontIcon="location_on"></mat-icon>
+            } @else {
+            <mat-icon aria-hidden="false" aria-label="List icon" fontIcon="format_list_bulleted"></mat-icon>
+            }
+        </button>
+    </div>
     @if (mode === 'list') {
     <div class="restaurants">
+        @for (restaurant of restaurants; track restaurant.id) {
+        <app-restaurant-card [restaurant]="restaurant"></app-restaurant-card>
+        }
+        @for (restaurant of restaurants; track restaurant.id) {
+        <app-restaurant-card [restaurant]="restaurant"></app-restaurant-card>
+        }
+        @for (restaurant of restaurants; track restaurant.id) {
+        <app-restaurant-card [restaurant]="restaurant"></app-restaurant-card>
+        }
         @for (restaurant of restaurants; track restaurant.id) {
         <app-restaurant-card [restaurant]="restaurant"></app-restaurant-card>
         }

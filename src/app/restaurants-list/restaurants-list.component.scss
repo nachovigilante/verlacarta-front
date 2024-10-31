@@ -1,7 +1,3 @@
-h2 {
-    font-size: large;
-}
-
 .container {
     display: flex;
     flex-direction: column;
@@ -9,9 +5,57 @@ h2 {
     padding: 20px;
 }
 
+.title {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 15px;
+
+    h2 {
+        font-size: large;
+    }
+
+    button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(181, 26, 26);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        height: 40px;
+        width: 40px;
+    }
+}
+
 .restaurants {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 20px;
     justify-content: center;
+    width: 100%;
+    max-width: 380px;
+    margin: auto;
+}
+
+@media screen and (min-width: 640px) {
+    .restaurants {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: start;
+        max-width: 580px;
+    }
+}
+
+@media screen and (min-width: 940px) {
+    .restaurants {
+        max-width: 880px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .restaurants {
+        max-width: 1180px;
+    }
 }
