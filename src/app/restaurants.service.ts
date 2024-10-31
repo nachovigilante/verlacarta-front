@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 
-export interface Restaurant {
+export type Restaurant = {
     id: string;
     name: string;
     location: string;
@@ -10,7 +10,7 @@ export interface Restaurant {
     description: string;
     logo: string;
     menu: string;
-}
+};
 
 @Injectable({
     providedIn: 'root',
