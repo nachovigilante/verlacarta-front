@@ -48,10 +48,9 @@
                 h4 {
                     font-size: 16px;
                     font-weight: 700;
-                    color: white;
-                    background-color: #b51a1a;
                     padding: 2px 4px;
                     border-radius: 5px;
+                    border: 1px solid #e7e7e7;
                 }
             }
 
@@ -79,6 +78,16 @@
                         color: #666;
                     }
                 }
+            }
+
+            button {
+                font-size: 16px;
+                font-weight: 700;
+                color: white;
+                background-color: #b51a1a;
+                padding: 2px 10px;
+                border-radius: 5px;
+                border: none;
             }
         }
     }
