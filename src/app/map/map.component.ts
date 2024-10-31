@@ -39,7 +39,7 @@ export class MapComponent {
                         coordinates: [this.lng, this.lat],
                     },
                     properties: {
-                        title: 'Vos ',
+                        title: 'Vos',
                         description: 'Acá va la dirección de tu ubicación',
                     },
                 },
@@ -67,8 +67,6 @@ export class MapComponent {
         }
 
         for (const restaurant of this.restaurants) {
-            const location = restaurant.location.split(',');
-
             const geojson = {
                 type: 'FeatureCollection',
                 features: [
@@ -76,10 +74,7 @@ export class MapComponent {
                         type: 'Feature',
                         geometry: {
                             type: 'Point',
-                            coordinates: [
-                                parseFloat(location[1]),
-                                parseFloat(location[0]),
-                            ],
+                            coordinates: [restaurant.lng, restaurant.lat],
                         },
                         properties: {
                             title: restaurant.name,
@@ -95,7 +90,7 @@ export class MapComponent {
                         point.geometry.coordinates as mapboxgl.LngLatLike,
                     )
                     .setPopup(
-                        new mapboxgl.Popup({ offset: 25 }) // add popups
+                        new mapboxgl.Popup()
                             .setHTML(
                                 `<h3>${point.properties.title}</h3><p>${point.properties.description}</p>`,
                             ),

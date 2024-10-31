@@ -19,8 +19,8 @@ export class RestaurantCardComponent {
 
     async ngOnInit() {
         const restaurantPosition = {
-            lat: parseFloat(this.restaurant.location.split(',')[0]),
-            lng: parseFloat(this.restaurant.location.split(',')[1]),
+            lat: this.restaurant.lat,
+            lng: this.restaurant.lng,
         };
 
         const distance = this.locationService.distanceBetween(
@@ -34,7 +34,7 @@ export class RestaurantCardComponent {
         if (distanceInKilometers.split('.')[1] === '0') {
             this.distanceToUser = `${distanceInKilometers.split('.')[0]} km`;
         } else {
-            this.distanceToUser = `${distanceInKilometers.replace('.', ',')} km`;
+            this.distanceToUser = `${distanceInKilometers} km`;
         }
     }
 }
