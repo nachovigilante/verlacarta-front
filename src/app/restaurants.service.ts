@@ -32,6 +32,8 @@ export class RestaurantsService {
         tables: number,
         logo: string,
         menu: string,
+        lat:number,
+        lng: number,
     ): Promise<Restaurant | null> {
 
         const restaurantData = {
@@ -41,7 +43,10 @@ export class RestaurantsService {
             menu,
             tables,
             logo,
+            lat,
+            lng
         };
+        console.log(restaurantData)
         
         try {
             const response = await fetch(`${environment.backendUrl}/restaurants`, {

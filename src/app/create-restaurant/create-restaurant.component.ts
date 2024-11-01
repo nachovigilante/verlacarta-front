@@ -42,12 +42,14 @@ import { Restaurant, RestaurantsService } from '../restaurants.service';
 export class CreateRestaurantComponent {
     restaurantForm: FormGroup;
     logo: string | null = null;
-    locationService: any;
+    lat: number  = 0;
+    lng: number  = 0;
 
     constructor(
         private fb: FormBuilder,
         private cd: ChangeDetectorRef,
         private restaurantService: RestaurantsService,
+        private locationService: LocationService
     ) {
         this.restaurantForm = this.fb.group(
             {
@@ -83,9 +85,12 @@ export class CreateRestaurantComponent {
             if (openTime >= closeTime) {
                 return { timeMismatch: true };
             }
+        }else{
+            return { timeMismatch: false }; 
         }
         return null;
     }
+
     emailValidator: ValidatorFn = (
         control: AbstractControl,
     ): ValidationErrors | null => {
@@ -112,8 +117,25 @@ export class CreateRestaurantComponent {
         }
     }
 
+    async fetchAndSetLocation(): Promise<void> {
+        try {
+          // Get the current location
+          const position = await this.locationService.getCurrentLocation();
+          
+          // Reverse geocode to get the address and city
+          const location = await this.locationService.reverseGeocode(position);
+          
+          // Set the form control 'location' with the retrieved address and city
+          this.restaurantForm.patchValue({ location });
+          this.lat = position.lat;
+          this.lng = position.lng;
+          console.log(this.lat,this.lng);
+        } catch (error) {
+          console.error('Error fetching location:', error);
+        }
+      }
+
     onSubmit() {
-        console.log(this.restaurantForm.value);
         if (this.restaurantForm.valid) {
             this.restaurantService
                 .createRestaurant(
@@ -123,10 +145,11 @@ export class CreateRestaurantComponent {
                     this.restaurantForm.value.tables,
                     this.restaurantForm.value.logo,
                     this.restaurantForm.value.menu,
+                    this.lat,
+                    this.lng
                 )
                 .then((response: any) => {
                     console.log('Restaurant created:', response);
-                    this.restaurantForm.reset();
                 })
                 .catch((err: any) => {
                     console.error('Error creating restaurant:', err);

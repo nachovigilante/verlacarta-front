@@ -9,13 +9,17 @@
     <input matInput formControlName="password" required>
   </mat-form-field>
 
+  <button type="button" (click)="fetchAndSetLocation()">Get Current Location</button>
+  
   <mat-form-field appearance="fill">
     <mat-label>Dirección</mat-label>
     <input matInput formControlName="location" required>
   </mat-form-field>
   <mat-form-field appearance="fill">
+
+
     <mat-label>Email de contacto</mat-label>
-    <input matInput formControlName="contactEmail" placeholder="Email" >
+    <input matInput formControlName="contactEmail" placeholder="Email" required >
     <mat-error *ngIf="restaurantForm.get('contactEmail')?.hasError('invalidEmail')">
       Este campo debe ser un email valido.
     </mat-error>

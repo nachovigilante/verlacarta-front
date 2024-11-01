@@ -48,7 +48,7 @@ export class LocationService {
         const address = json.features[0].properties.context.address.name;
 
         const city = json.features[0].properties.context.region.name;
-
+        console.log(`${address}, ${city}`)
         return `${address}, ${city}`;
     }
 
