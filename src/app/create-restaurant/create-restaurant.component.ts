@@ -52,6 +52,7 @@ export class CreateRestaurantComponent {
         this.restaurantForm = this.fb.group(
             {
                 name: ['', Validators.required],
+                password: ['', Validators.required],
                 location: ['', Validators.required],
                 contactEmail: [
                     '',
@@ -117,6 +118,7 @@ export class CreateRestaurantComponent {
             this.restaurantService
                 .createRestaurant(
                     this.restaurantForm.value.name,
+                    this.restaurantForm.value.password,
                     this.restaurantForm.value.location,
                     this.restaurantForm.value.tables,
                     this.restaurantForm.value.logo,

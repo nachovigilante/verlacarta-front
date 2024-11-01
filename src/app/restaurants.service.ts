@@ -4,6 +4,7 @@ import { environment } from '../environments/environment';
 export type Restaurant = {
     id: string;
     name: string;
+    password: string;
     location: string;
     lat: number;
     lng: number;
@@ -20,27 +21,30 @@ export class RestaurantsService {
 
     async getRestaurants() {
         return fetch(environment.backendUrl + '/restaurants')
-            .then((response) => response.json())
+            .then((response) =>  response.json())
             .then((data) => data);
     }
 
     async createRestaurant(
         name: string,
+        password: string,
         location: string,
         tables: number,
         logo: string,
         menu: string,
     ): Promise<Restaurant | null> {
+
         const restaurantData = {
             name,
+            password,
             location,
             menu,
             tables,
             logo,
         };
-
+        
         try {
-            const response = await fetch(environment.backendUrl, {
+            const response = await fetch(`${environment.backendUrl}/restaurants`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
