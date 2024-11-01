@@ -3,6 +3,7 @@ import { CreateRestaurantComponent } from './create-restaurant/create-restaurant
 import { RestaurantsListComponent } from './restaurants-list/restaurants-list.component';
 import { MenuComponent } from './menu/menu.component';
 import { OrderComponent } from './order/order.component';
+import { OrdersByRestaurantComponent } from './orders-by-restaurant/orders-by-restaurant.component';
 
 export const routes: Routes = [
     {
@@ -12,11 +13,10 @@ export const routes: Routes = [
     {
         path: 'createRestaurant',
         component: CreateRestaurantComponent,
-        canActivate: [],
-        data: {},
     },
 
     { path: 'menu/:id/:tableNumber', component: MenuComponent },
     { path: 'menu/:id', component: MenuComponent },
     { path: 'order', component: OrderComponent },
+    { path: 'orders/:restaurantId', component: OrdersByRestaurantComponent },
 ];

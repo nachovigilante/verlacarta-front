@@ -41,4 +41,33 @@ export class OrdersService {
                 })),
             );
     }
+
+    async getOrdersByRestaurantId(restaurantId: string) {
+        return fetch(environment.backendUrl + '/orders/restaurant/' + restaurantId)
+        //return fetch(environment.backendUrl + '/orders')
+            .then((response) => response.json())
+            .then((data) =>
+                data.map((order: Order) => ({
+                    ...order,
+                    date: new Date(order.createdAt).toLocaleDateString(),
+                    // cut seconds
+                    time: new Date(order.createdAt).toLocaleTimeString().slice(0, -3) + "hs",
+                })),
+            );
+    }
+
+    async updateOrderStatus(orderId :string , newStatus: string ){
+      const response = await fetch(`${environment.backendUrl}/orders/${orderId}/status`, {
+        method: 'PUT', 
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ newStatus }),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to update order status');
+      }
+      return response.json(); 
+    }
+    
 }
