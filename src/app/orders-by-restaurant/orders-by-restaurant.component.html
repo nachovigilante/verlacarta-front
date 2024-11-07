@@ -1,10 +1,10 @@
 <div class="container">
     <div class="title">
-        <h2>Buscar pedidos</h2>
+        <h2>Pedidos para {{restaurant?.name}}</h2>
     </div>
     <div class="orders">
         @for (order of orders; track order.id) {
-        <app-order-card [order]="order" [admin]="true"></app-order-card>
+        <app-order-card [order]="order" [admin]="true" (onStatusChange)="changeOrderStatus($event)"></app-order-card>
         }
     </div>
 </div>

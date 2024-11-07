@@ -21,16 +21,19 @@ header .container {
         .info {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 5px;
 
             img {
                 height: 16px;
             }
 
-            span {
+            p {
                 font-size: 12px;
                 font-weight: bold;
                 color: black;
+                width: fit-content;
+                text-align: center;
             }
         }
     }

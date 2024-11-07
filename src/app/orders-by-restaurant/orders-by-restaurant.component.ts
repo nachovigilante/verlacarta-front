@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { OrdersService, Order } from '../orders.service';
 import { ActivatedRoute } from '@angular/router';
 import { RestaurantsService, Restaurant } from '../restaurants.service';
@@ -20,6 +20,7 @@ export class OrdersByRestaurantComponent {
         'Listo para ser retirado',
         'Próximo a ser llevado',
     ];
+    restaurant: Restaurant | null = null;
 
     constructor(
         private route: ActivatedRoute,
@@ -38,22 +39,23 @@ export class OrdersByRestaurantComponent {
             const id = params.get('restaurantId');
             if (id) {
                 this.id = id;
-                const restaurant: Restaurant | null =
+                this.restaurant =
                     await this.restaurantsService.getRestaurantById(this.id);
-                if (restaurant) {
-                    this.fetchOrders();
-                }
+
+                if (this.restaurant) this.fetchOrders();
             }
         });
     }
-    async changeOrderStatus(order: Order) {
+
+    @Output() async changeOrderStatus(order: Order) {
         try {
             const currentIndex = this.orderStates.indexOf(order.status);
             if (currentIndex < this.orderStates.length - 1) {
                 const newStatus = this.orderStates[currentIndex + 1];
                 this.orderService
                     .updateOrderStatus(order.id, newStatus)
-                    .then(() => {
+                    .then((data) => {
+                        console.log('Order status updated:', data);
                         order.status = newStatus; // Update the status in the UI
                     })
                     .catch((error) => {
