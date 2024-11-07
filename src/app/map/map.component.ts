@@ -3,7 +3,7 @@ import * as mapboxgl from 'mapbox-gl';
 import { LocationService } from '../location.service';
 import { environment } from '../../environments/environment';
 // import 'mapbox-gl/dist/mapbox-gl.css';
-import { Restaurant } from '../restaurants.service';
+import { Restaurant, RestaurantsService } from '../restaurants.service';
 
 @Component({
     selector: 'app-map',
@@ -18,12 +18,20 @@ export class MapComponent {
     lat: number = 0;
     lng: number = 0;
 
-    @Input()
+    constructor(
+        private locationService: LocationService,
+        private restaurantsService: RestaurantsService,
+    ) {}
     restaurants: Restaurant[] = [];
 
-    constructor(private locationService: LocationService) {}
+    async fetchRestaurants() {
+        const data = await this.restaurantsService.getRestaurants();
+        this.restaurants = data;
+    }
 
     async ngOnInit() {
+        await this.fetchRestaurants();
+
         const position = await this.locationService.getCurrentLocation();
 
         this.lat = position.lat;
@@ -90,10 +98,9 @@ export class MapComponent {
                         point.geometry.coordinates as mapboxgl.LngLatLike,
                     )
                     .setPopup(
-                        new mapboxgl.Popup()
-                            .setHTML(
-                                `<h3>${point.properties.title}</h3><p>${point.properties.description}</p>`,
-                            ),
+                        new mapboxgl.Popup().setHTML(
+                            `<h3>${point.properties.title}</h3><p>${point.properties.description}</p>`,
+                        ),
                     )
                     .addTo(this.map);
             }
