@@ -8,9 +8,36 @@ header .container {
     background-color: white;
     width: 100vw;
 
-    // img {
-    //     height: 32px;
-    // }
+    .logo {
+        display: none;
+        text-decoration: none;
+        align-items: center;
+        gap: 10px;
+        color: black;
+
+        img {
+            height: 32px;
+
+            @media (min-width: 768px) {
+                height: 40px;
+            }
+        }
+
+        p {
+            display: none;
+            font-size: 20px;
+
+            @media (min-width: 768px) {
+                display: block;
+            }
+        }
+
+        display: none;
+
+        @media (min-width: 450px) {
+            display: flex;
+        }
+    }
 
     .location {
         display: flex;
@@ -40,9 +67,23 @@ header .container {
                 text-align: center;
             }
         }
+
+        @media screen and (min-width: 768px) {
+            position: relative;
+            left: -65px;
+        }
     }
 
     .spacer {
         width: 30px;
+    }
+
+    @media screen and (min-width: 450px) {
+        justify-content: space-between;
+    }
+
+    @media screen and (min-width: 768px) {
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
 }
