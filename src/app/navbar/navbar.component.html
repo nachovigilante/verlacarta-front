@@ -1,0 +1,14 @@
+<div class="navbar">
+    <a href="/" [class.active]="active === ''">
+        <mat-icon aria-hidden="false" aria-label="Inicio" fontIcon="home"></mat-icon>
+        <p>Inicio</p>
+    </a>
+    <a href="/map" [class.active]="active === 'map'">
+        <mat-icon aria-hidden="false" aria-label="Mapa" fontIcon="location_on"></mat-icon>
+        <p>Mapa</p>
+    </a>
+    <a href="/order" [class.active]="active === 'order'">
+        <mat-icon aria-hidden="false" aria-label="Pedidos" fontIcon="shopping_bag"></mat-icon>
+        <p>Pedidos</p>
+    </a>
+</div>

@@ -1,12 +1,12 @@
 header .container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 15px 20px 10px;
 
-    img {
-        height: 32px;
-    }
+    // img {
+    //     height: 32px;
+    // }
 
     .location {
         display: flex;
