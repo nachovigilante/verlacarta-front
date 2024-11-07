@@ -2,8 +2,20 @@
     <div class="title">
         <h2>Buscar pedidos</h2>
     </div>
+    <form class="search" (submit)="searchOrders($event)">
+        <div class="input">
+            <b>#</b>
+            <input type="text" placeholder="Número de pedido" />
+        </div>
+        <button>Buscar</button>
+    </form>
     <div class="orders">
-        @for (order of orders; track order.id) {
+        @if (filteredOrders.length === 0) {
+        <div class="empty">
+            <p>No se encontraron pedidos :(</p>
+        </div>
+        }
+        @for (order of filteredOrders; track order.id) {
         <app-order-card [order]="order"></app-order-card>
         }
     </div>

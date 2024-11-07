@@ -6,3 +6,40 @@
     padding: 20px;
     width: 100%;
 }
+
+.search {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 10px;
+
+    .input {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    input {
+        flex: 1;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #b51a1a;
+        color: #fff;
+        cursor: pointer;
+    }
+}
+
+.empty p {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #adadad;
+}
