@@ -10,8 +10,7 @@ import { LocationService } from '../location.service';
     styleUrl: './restaurant-card.component.scss',
 })
 export class RestaurantCardComponent {
-    @Input()
-    restaurant!: Restaurant;
+    @Input() restaurant!: Restaurant;
 
     constructor(private locationService: LocationService) {}
 

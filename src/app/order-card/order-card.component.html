@@ -1,0 +1,26 @@
+<div class="order">
+    <div class="order-info">
+        <div class="header">
+            <div class="left">
+                <span class="status">{{ order.status }}</span>
+                <span>•</span>
+                <span class="date">{{ order.date }}</span>
+                <span>•</span>
+                <span class="time">{{ order.time }}</span>
+            </div>
+            <h4>#{{ order.number }}</h4>
+        </div>
+        <div class="restaurant">
+            <img src="{{ order.table.restaurant.logo }}" alt="{{ order.table.restaurant.name }}">
+            <div class="restaurant-info">
+                <h3>{{ order.table.restaurant.name }}</h3>
+                <p>{{ order.table.restaurant.location }}</p>
+            </div>
+        </div>
+        @if (admin) {
+        <button (click)="changeStatus(order)">
+            Cambiar estado
+        </button>
+        }
+    </div>
+</div>
