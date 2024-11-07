@@ -3,6 +3,10 @@ header .container {
     justify-content: center;
     align-items: center;
     padding: 15px 20px 10px;
+    position: relative;
+    z-index: 10;
+    background-color: white;
+    width: 100vw;
 
     // img {
     //     height: 32px;
