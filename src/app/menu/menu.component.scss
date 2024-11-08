@@ -1,7 +1,17 @@
 .pdf-container {
-    height: 100vh;
+    height: calc(100vh - 150px);
+    width: 100vw;
+    position: absolute;
+    top: 40px;
+    padding: 20px;
+    overflow: hidden;
+
+    h2 {
+        font-size: 18px;
+    }
 
     #viewer {
         height: 100%;
+        width: 100%;
     }
 }
