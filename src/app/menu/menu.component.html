@@ -1,11 +1,10 @@
 <main class="pdf-container">
     <h2>Visualizador de MENU</h2>
-    
-    <pdf-viewer
-    [src]="menuPdfUrl" 
-        id="viewer"
-    ></pdf-viewer>
+
+    <pdf-viewer [src]="menuPdfUrl" id="viewer"></pdf-viewer>
+    @if (tableNumber) {
     <div class="order-button-container">
-        <button >Realizar Pedido - Mesa {{ tableNumber? tableNumber : null }}</button>
-      </div>
+        <button>Realizar pedido - Mesa {{ tableNumber }}</button>
+    </div>
+    }
 </main>

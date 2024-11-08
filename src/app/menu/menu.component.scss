@@ -1,5 +1,5 @@
 .pdf-container {
-    height: calc(100vh - 150px);
+    height: calc(100vh - 140px);
     width: 100vw;
     position: absolute;
     top: 40px;
@@ -13,5 +13,22 @@
     #viewer {
         height: 100%;
         width: 100%;
+    }
+
+    .order-button-container {
+        position: absolute;
+        bottom: 0px;
+        right: 10px;
+
+        button {
+            background-color: #b51a1a;
+            border: none;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
+            color: white;
+            font-weight: 500;
+        }
     }
 }
