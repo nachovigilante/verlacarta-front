@@ -46,7 +46,6 @@ export class RestaurantsService {
             lat,
             lng
         };
-        console.log(restaurantData)
         
         try {
             const response = await fetch(`${environment.backendUrl}/restaurants`, {
