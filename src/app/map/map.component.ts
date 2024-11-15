@@ -3,7 +3,7 @@ import * as mapboxgl from 'mapbox-gl';
 import { LocationService } from '../location.service';
 import { environment } from '../../environments/environment';
 // import 'mapbox-gl/dist/mapbox-gl.css';
-import { Restaurant, RestaurantsService } from '../restaurants.service';
+import { Restaurant, RestaurantsService } from '../restaurant/restaurants.service';
 
 @Component({
     selector: 'app-map',

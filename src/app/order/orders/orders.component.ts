@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { Order, OrdersService } from '../../orders.service';
-import { OrderCardComponent } from '../order-card/order-card.component';
+import { Order, OrdersService } from '../orders.service';
+import { OrderCardComponent } from '../card/order-card.component';
 
 @Component({
-    selector: 'app-order',
+    selector: 'app-orders',
     standalone: true,
     imports: [OrderCardComponent],
-    templateUrl: './order.component.html',
-    styleUrl: './order.component.scss',
+    templateUrl: './orders.component.html',
+    styleUrl: './orders.component.scss',
 })
 export class OrderComponent {
     constructor(private orderService: OrdersService) {}

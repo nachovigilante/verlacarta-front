@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PdfViewerModule } from 'ng2-pdf-viewer' /* @vite-ignore */;
 import { ActivatedRoute } from '@angular/router';
-import { Restaurant, RestaurantsService } from '../../restaurants.service';
+import { Restaurant, RestaurantsService } from '../restaurants.service';
 
 @Component({
     selector: 'app-menu',

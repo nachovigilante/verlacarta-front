@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Restaurant } from './restaurants.service';
-import { environment } from '../environments/environment';
+import { Restaurant } from '../restaurant/restaurants.service';
+import { environment } from '../../environments/environment';
 
 export type Order = {
     id: string;

@@ -1,8 +1,8 @@
 import { Component, Output } from '@angular/core';
-import { OrdersService, Order } from '../../orders.service';
+import { OrdersService, Order } from '../orders.service';
 import { ActivatedRoute } from '@angular/router';
-import { RestaurantsService, Restaurant } from '../../restaurants.service';
-import { OrderCardComponent } from '../order-card/order-card.component';
+import { RestaurantsService, Restaurant } from '../../restaurant/restaurants.service';
+import { OrderCardComponent } from '../card/order-card.component';
 
 @Component({
     selector: 'app-orders-by-restaurant',
