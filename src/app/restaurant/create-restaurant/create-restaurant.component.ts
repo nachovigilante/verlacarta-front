@@ -13,13 +13,12 @@ import {
     ValidatorFn,
 } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HeaderComponent } from '../header/header.component';
 import { CommonModule } from '@angular/common';
-import { LocationService, Position } from '../location.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
-import { Restaurant, RestaurantsService } from '../restaurants.service';
+import { RestaurantsService } from '../../restaurants.service';
+import { LocationService } from '../../location.service';
 
 @Component({
     selector: 'app-create-restaurant',
@@ -28,7 +27,6 @@ import { Restaurant, RestaurantsService } from '../restaurants.service';
         MatFormFieldModule,
         MatInputModule,
         MatSlideToggleModule,
-        HeaderComponent,
         ReactiveFormsModule,
         CommonModule,
         MatButtonModule,

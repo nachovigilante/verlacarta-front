@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Position, LocationService } from '../location.service';
 import { RouterModule, RouterOutlet } from '@angular/router';
+import { LocationService, Position } from '../../location.service';
 
 @Component({
     selector: 'app-header',

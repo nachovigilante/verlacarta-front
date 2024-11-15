@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { CreateRestaurantComponent } from './create-restaurant/create-restaurant.component';
-import { RestaurantsListComponent } from './restaurants-list/restaurants-list.component';
-import { MenuComponent } from './menu/menu.component';
-import { OrderComponent } from './order/order.component';
-import { OrdersByRestaurantComponent } from './orders-by-restaurant/orders-by-restaurant.component';
+import { RestaurantsListComponent } from './restaurant/restaurants-list/restaurants-list.component';
+import { OrderComponent } from './order/order/order.component';
+import { OrdersByRestaurantComponent } from './order/orders-by-restaurant/orders-by-restaurant.component';
 import { MapComponent } from './map/map.component';
+import { CreateRestaurantComponent } from './restaurant/create-restaurant/create-restaurant.component';
+import { MenuComponent } from './restaurant/menu/menu.component';
 
 export const routes: Routes = [
     {
