@@ -15,9 +15,11 @@ export class RestaurantsListComponent {
     restaurants: Restaurant[] = [];
 
     fetchRestaurants() {
-        this.restaurantsService
-            .getRestaurants()
-            .then((data) => (this.restaurants = data));
+        this.restaurantsService.getRestaurants().then((data) => {
+            console.log(data);
+
+            this.restaurants = data;
+        });
     }
 
     ngOnInit() {

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { LocationService } from '../location.service';
 
 export type Restaurant = {
     id: string;
@@ -11,18 +12,56 @@ export type Restaurant = {
     description: string;
     logo: string;
     menu: string;
+    distanceToUser: string;
 };
 
 @Injectable({
     providedIn: 'root',
 })
 export class RestaurantsService {
-    constructor() {}
+    constructor(private locationService: LocationService) {}
 
     async getRestaurants() {
         return fetch(environment.backendUrl + '/restaurants')
-            .then((response) =>  response.json())
-            .then((data) => data);
+            .then((response) => response.json())
+            .then((restaurants) =>
+                Promise.all(
+                    restaurants.map(async (restaurant: Restaurant) => {
+                        restaurant.distanceToUser =
+                            await this.calculateDistanceToUser(
+                                restaurant,
+                                this.locationService,
+                            );
+                        return restaurant;
+                    }),
+                ),
+            );
+    }
+
+    async getRestaurantById(id: string): Promise<Restaurant | null> {
+        try {
+            const response = await fetch(
+                `${environment.backendUrl}/restaurants/${id}`,
+            );
+
+            if (response.ok) {
+                const restaurant = (await response.json()) as Restaurant;
+                restaurant.distanceToUser = await this.calculateDistanceToUser(
+                    restaurant,
+                    this.locationService,
+                );
+                return restaurant;
+            } else {
+                console.error(
+                    `Failed to fetch restaurant with id ${id}:`,
+                    response.statusText,
+                );
+                return null;
+            }
+        } catch (error) {
+            console.error(`Error fetching restaurant with id ${id}:`, error);
+            return null;
+        }
     }
 
     async createRestaurant(
@@ -32,10 +71,9 @@ export class RestaurantsService {
         tables: number,
         logo: string,
         menu: string,
-        lat:number,
+        lat: number,
         lng: number,
-    ): Promise<Restaurant | null> {
-
+    ) {
         const restaurantData = {
             name,
             password,
@@ -44,20 +82,23 @@ export class RestaurantsService {
             tables,
             logo,
             lat,
-            lng
+            lng,
         };
-        
+
         try {
-            const response = await fetch(`${environment.backendUrl}/restaurants`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
+            const response = await fetch(
+                `${environment.backendUrl}/restaurants`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(restaurantData),
                 },
-                body: JSON.stringify(restaurantData),
-            });
+            );
 
             if (response.ok) {
-                return response.json();
+                return (await response.json()) as Restaurant;
             } else {
                 console.error(
                     'Failed to create restaurant:',
@@ -71,24 +112,29 @@ export class RestaurantsService {
         }
     }
 
-    async getRestaurantById(id: string): Promise<Restaurant | null> {
-        try {
-            const response = await fetch(
-                `${environment.backendUrl}/restaurants/${id}`,
-            );
+    async calculateDistanceToUser(
+        restaurant: Restaurant,
+        locationService: LocationService,
+    ) {
+        const restaurantPosition = {
+            lat: restaurant.lat,
+            lng: restaurant.lng,
+        };
 
-            if (response.ok) {
-                return response.json();
-            } else {
-                console.error(
-                    `Failed to fetch restaurant with id ${id}:`,
-                    response.statusText,
-                );
-                return null;
-            }
-        } catch (error) {
-            console.error(`Error fetching restaurant with id ${id}:`, error);
-            return null;
-        }
+        const distance = locationService.distanceBetween(
+            restaurantPosition,
+            await locationService.getCurrentLocation(),
+        );
+
+        const distanceInMeters = Math.round(distance);
+
+        const distanceInKilometers = distanceInMeters / 1000;
+
+        if (distanceInKilometers >= 100) return '+99 km';
+
+        if (distanceInKilometers.toFixed(1).split('.')[1] === '0')
+            return `${distanceInKilometers.toFixed(1).split('.')[0]} km`;
+
+        return `${distanceInKilometers.toFixed(1)} km`;
     }
 }

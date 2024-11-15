@@ -5,6 +5,7 @@ import { OrdersByRestaurantComponent } from './order/orders-by-restaurant/orders
 import { MapComponent } from './map/map.component';
 import { CreateRestaurantComponent } from './restaurant/create/create-restaurant.component';
 import { MenuComponent } from './restaurant/menu/menu.component';
+import { RestaurantDetailsComponent } from './restaurant/restaurant-detail/restaurant-detail.component';
 
 export const routes: Routes = [
     {
@@ -16,11 +17,15 @@ export const routes: Routes = [
         component: MapComponent,
     },
     {
-        path: 'createRestaurant',
+        path: 'restaurant/register',
         component: CreateRestaurantComponent,
     },
-    { path: 'menu/:id/:tableNumber', component: MenuComponent },
-    { path: 'menu/:id', component: MenuComponent },
+    {
+        path: 'restaurant/:id',
+        component: RestaurantDetailsComponent,
+    },
+    { path: 'restaurant/:id/menu/:tableNumber', component: MenuComponent },
+    { path: 'restaurant/:id/menu', component: MenuComponent },
     { path: 'order', component: OrderComponent },
     { path: 'orders/:restaurantId', component: OrdersByRestaurantComponent },
 ];
