@@ -3,7 +3,10 @@ import * as mapboxgl from 'mapbox-gl';
 import { LocationService } from '../location.service';
 import { environment } from '../../environments/environment';
 // import 'mapbox-gl/dist/mapbox-gl.css';
-import { Restaurant, RestaurantsService } from '../restaurant/restaurants.service';
+import {
+    Restaurant,
+    RestaurantsService,
+} from '../restaurant/restaurants.service';
 
 @Component({
     selector: 'app-map',
@@ -62,6 +65,7 @@ export class MapComponent {
             center: [this.lng, this.lat],
         });
 
+        // TODO: This for loop is not necessary
         for (const point of geojson.features) {
             new mapboxgl.Marker()
                 .setLngLat(point.geometry.coordinates as mapboxgl.LngLatLike)
@@ -87,13 +91,19 @@ export class MapComponent {
                         properties: {
                             title: restaurant.name,
                             description: restaurant.location, // TODO: Add more details
+                            image: restaurant.logo,
                         },
                     },
                 ],
             };
 
+            
+            const markerEl = document.createElement('div');
+            markerEl.className = 'restaurant-marker';
+            markerEl.style.backgroundImage = `url(${restaurant.logo})`;
+
             for (const point of geojson.features) {
-                new mapboxgl.Marker()
+                new mapboxgl.Marker(markerEl)
                     .setLngLat(
                         point.geometry.coordinates as mapboxgl.LngLatLike,
                     )
