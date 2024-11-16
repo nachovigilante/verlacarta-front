@@ -14,7 +14,6 @@ export type Order = {
     time: string;
     updatedAt: string;
     email: string;
-
     table: {
         id: string;
         restaurantId: string;

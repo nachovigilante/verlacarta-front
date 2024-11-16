@@ -32,4 +32,8 @@ export class AuthService {
             this.loggedInRestaurant = data.restaurant;
         }
     }
+
+    checkAdmin() {
+        return this.loggedIn;
+    }
 }

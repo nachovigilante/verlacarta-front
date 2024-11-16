@@ -56,7 +56,7 @@ export class AdminLoginComponent {
                     this.loginForm.value.name,
                     this.loginForm.value.password,
                 );
-                this.router.navigate(['/admin/orders']);
+                this.router.navigate(['/admin']);
             } catch (error) {
                 console.error(error);
             }

@@ -36,8 +36,8 @@ export class OrdersByRestaurantComponent {
     }
 
     ngOnInit(): void {
-        if (this.authService.loggedInRestaurant)
-            this.fetchOrders(this.authService.loggedInRestaurant.id);
+        if (this.authService.checkAdmin())
+            this.fetchOrders(this.authService.loggedInRestaurant!.id);
         else this.router.navigate(['/admin/login']);
     }
 

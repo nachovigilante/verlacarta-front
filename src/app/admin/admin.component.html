@@ -1,0 +1,26 @@
+<main>
+    @if (this.restaurant){
+    <h2>Administrador de {{this.restaurant.name}}</h2>
+    <div class="tables">
+        @for (tableNumber of this.tables; track $index){
+        <div class="table">
+            <div class="title">
+                <h3>Mesa {{tableNumber}}</h3>
+                <button>Ver QR</button>
+            </div>
+            <ul class="orders">
+                @for (order of this.orders; track order.id){
+                <li>
+                    <div class="order">
+                        <h4>Orden {{order.number}}</h4>
+                        <p>Estado: {{order.status}}</p>
+                        <button>Ver detalles</button>
+                    </div>
+                </li>
+                }
+            </ul>
+        </div>
+        }
+    </div>
+    }
+</main>

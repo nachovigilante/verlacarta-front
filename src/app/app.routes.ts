@@ -7,6 +7,7 @@ import { CreateRestaurantComponent } from './restaurant/create/create-restaurant
 import { MenuComponent } from './restaurant/menu/menu.component';
 import { RestaurantDetailsComponent } from './restaurant/restaurant-detail/restaurant-detail.component';
 import { AdminLoginComponent } from './auth/admin-login/admin-login.component';
+import { AdminComponent } from './admin/admin.component';
 
 export const routes: Routes = [
     {
@@ -32,5 +33,6 @@ export const routes: Routes = [
         path: 'admin/login',
         component: AdminLoginComponent,
     },
+    { path: 'admin', component: AdminComponent },
     { path: 'admin/orders', component: OrdersByRestaurantComponent },
 ];
