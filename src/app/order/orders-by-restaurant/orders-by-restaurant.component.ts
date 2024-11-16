@@ -1,13 +1,14 @@
 import { Component, Output } from '@angular/core';
 import { OrdersService, Order } from '../orders.service';
-import { ActivatedRoute } from '@angular/router';
-import { RestaurantsService, Restaurant } from '../../restaurant/restaurants.service';
+import { Restaurant } from '../../restaurant/restaurants.service';
 import { OrderCardComponent } from '../card/order-card.component';
+import { AuthService } from '../../auth/auth.service';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
     selector: 'app-orders-by-restaurant',
     standalone: true,
-    imports: [OrderCardComponent],
+    imports: [OrderCardComponent, RouterOutlet],
     templateUrl: './orders-by-restaurant.component.html',
     styleUrl: './orders-by-restaurant.component.scss',
 })
@@ -23,28 +24,22 @@ export class OrdersByRestaurantComponent {
     restaurant: Restaurant | null = null;
 
     constructor(
-        private route: ActivatedRoute,
+        private authService: AuthService,
         private orderService: OrdersService,
-        private restaurantsService: RestaurantsService,
+        private router: Router,
     ) {}
 
-    fetchOrders() {
+    fetchOrders(restaurantId: string) {
         this.orderService
-            .getOrdersByRestaurantId(this.id)
+            .getOrdersByRestaurantId(restaurantId)
             .then((data) => (this.orders = data));
     }
 
     ngOnInit(): void {
-        this.route.paramMap.subscribe(async (params) => {
-            const id = params.get('restaurantId');
-            if (id) {
-                this.id = id;
-                this.restaurant =
-                    await this.restaurantsService.getRestaurantById(this.id);
-
-                if (this.restaurant) this.fetchOrders();
-            }
-        });
+        if (this.authService.loggedInRestaurant)
+            this.fetchOrders(this.authService.loggedInRestaurant.id);
+        // Redirect to login
+        else this.router.navigate(['/admin/login']);
     }
 
     @Output() async changeOrderStatus(order: Order) {

@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { LocationService } from '../../location.service';
 import { Restaurant } from '../restaurants.service';
 
 @Component({

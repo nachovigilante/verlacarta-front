@@ -6,6 +6,7 @@ import { MapComponent } from './map/map.component';
 import { CreateRestaurantComponent } from './restaurant/create/create-restaurant.component';
 import { MenuComponent } from './restaurant/menu/menu.component';
 import { RestaurantDetailsComponent } from './restaurant/restaurant-detail/restaurant-detail.component';
+import { AdminLoginComponent } from './auth/admin-login/admin-login.component';
 
 export const routes: Routes = [
     {
@@ -27,5 +28,9 @@ export const routes: Routes = [
     { path: 'restaurant/:id/menu/:tableNumber', component: MenuComponent },
     { path: 'restaurant/:id/menu', component: MenuComponent },
     { path: 'order', component: OrderComponent },
-    { path: 'orders/:restaurantId', component: OrdersByRestaurantComponent },
+    {
+        path: 'admin/login',
+        component: AdminLoginComponent,
+    },
+    { path: 'admin/orders', component: OrdersByRestaurantComponent },
 ];
