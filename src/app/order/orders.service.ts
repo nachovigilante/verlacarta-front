@@ -72,7 +72,7 @@ export class OrdersService {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ newStatus }),
+                body: JSON.stringify({ status: newStatus }),
             },
         );
         if (!response.ok) {

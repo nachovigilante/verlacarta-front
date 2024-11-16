@@ -38,7 +38,6 @@ export class OrdersByRestaurantComponent {
     ngOnInit(): void {
         if (this.authService.loggedInRestaurant)
             this.fetchOrders(this.authService.loggedInRestaurant.id);
-        // Redirect to login
         else this.router.navigate(['/admin/login']);
     }
 
@@ -51,7 +50,7 @@ export class OrdersByRestaurantComponent {
                     .updateOrderStatus(order.id, newStatus)
                     .then((data) => {
                         console.log('Order status updated:', data);
-                        order.status = newStatus; // Update the status in the UI
+                        order.status = newStatus;
                     })
                     .catch((error) => {
                         console.error('Error updating order status:', error);
