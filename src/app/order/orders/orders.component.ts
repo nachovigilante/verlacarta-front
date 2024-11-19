@@ -9,7 +9,7 @@ import { OrderCardComponent } from '../card/order-card.component';
     templateUrl: './orders.component.html',
     styleUrl: './orders.component.scss',
 })
-export class OrderComponent {
+export class OrdersComponent {
     constructor(private orderService: OrdersService) {}
 
     orders: Order[] = [];

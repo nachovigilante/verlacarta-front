@@ -1,10 +1,12 @@
+@if (this.restaurant) {
 <main class="pdf-container">
     <h2>Carta</h2>
 
     <pdf-viewer [src]="menuPdfUrl" id="viewer"></pdf-viewer>
-    @if (tableNumber) {
+    @if (this.table) {
     <div class="order-button-container">
-        <button>Realizar pedido - Mesa {{ tableNumber }}</button>
+        <a [href]="'/restaurant/' + this.restaurant.id + '/order/' + this.table.id">Realizar pedido - Mesa {{ this.table.number }}</a>
     </div>
     }
 </main>
+}

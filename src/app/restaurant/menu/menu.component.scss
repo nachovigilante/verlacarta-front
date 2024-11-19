@@ -17,18 +17,19 @@
 
     .order-button-container {
         position: absolute;
-        bottom: 0px;
-        right: 10px;
+        bottom: 20px;
+        right: 20px;
 
-        button {
+        a {
             background-color: #b51a1a;
             border: none;
-            padding: 10px;
-            font-size: 14px;
+            padding: 12px 14px;
+            font-size: 20px;
             border-radius: 5px;
             box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
             color: white;
             font-weight: 500;
+            text-decoration: none;
         }
     }
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PdfViewerModule } from 'ng2-pdf-viewer' /* @vite-ignore */;
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Restaurant, RestaurantsService } from '../restaurants.service';
+import { Table, TablesService } from '../../tables.service';
 
 @Component({
     selector: 'app-menu',
@@ -10,24 +11,45 @@ import { Restaurant, RestaurantsService } from '../restaurants.service';
     styleUrl: './menu.component.scss',
     templateUrl: './menu.component.html',
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent {
     menuPdfUrl: string = '';
-    tableNumber?: string;
+    table: Table | null = null;
+    restaurant: Restaurant | null = null;
 
     constructor(
         private route: ActivatedRoute,
         private restaurantsService: RestaurantsService,
+        private router: Router,
+        private tablesService: TablesService,
     ) {}
 
     ngOnInit(): void {
         this.route.paramMap.subscribe(async (params) => {
             const id = params.get('id');
-            this.tableNumber = params.get('tableNumber') || undefined;
-            if (id) {
-                const restaurant: Restaurant | null =
-                    await this.restaurantsService.getRestaurantById(id);
-                if (restaurant) {
-                    this.menuPdfUrl = restaurant.menu;
+
+            if (!id) {
+                this.router.navigate(['/']);
+                return;
+            }
+
+            const tableId = params.get('tableId') || undefined;
+
+            this.restaurant =
+                await this.restaurantsService.getRestaurantById(id);
+
+            if (!this.restaurant) {
+                this.router.navigate(['/']);
+                return;
+            }
+
+            this.menuPdfUrl = this.restaurant.menu;
+
+            if (tableId) {
+                this.table = await this.tablesService.getTableById(tableId);
+
+                if (!this.table) {
+                    this.router.navigate(['/']);
+                    return;
                 }
             }
         });
