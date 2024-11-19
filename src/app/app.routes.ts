@@ -29,7 +29,7 @@ export const routes: Routes = [
     },
     { path: 'restaurant/:id/menu', component: MenuComponent },
     { path: 'restaurant/:id/menu/:tableId', component: MenuComponent },
-    { path: 'restaurant/:id/order/pickup', component: PlaceOrderComponent },
+    { path: 'restaurant/:id/order', component: PlaceOrderComponent },
     { path: 'restaurant/:id/order/:tableId', component: PlaceOrderComponent },
     { path: 'orders', component: OrdersComponent },
     { path: 'admin/auth', component: OrdersByRestaurantComponent },

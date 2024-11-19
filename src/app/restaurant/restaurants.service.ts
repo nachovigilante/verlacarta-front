@@ -13,6 +13,7 @@ export type Restaurant = {
     logo: string;
     menu: string;
     distanceToUser: string;
+    distanceToUserInMeters: number;
 };
 
 @Injectable({
@@ -27,11 +28,15 @@ export class RestaurantsService {
             .then((restaurants) =>
                 Promise.all(
                     restaurants.map(async (restaurant: Restaurant) => {
-                        restaurant.distanceToUser =
+                        restaurant.distanceToUserInMeters =
                             await this.calculateDistanceToUser(
                                 restaurant,
                                 this.locationService,
                             );
+
+                        restaurant.distanceToUser = this.formatDistance(
+                            restaurant.distanceToUserInMeters,
+                        );
                         return restaurant;
                     }),
                 ),
@@ -46,10 +51,17 @@ export class RestaurantsService {
 
             if (response.ok) {
                 const restaurant = (await response.json()) as Restaurant;
-                restaurant.distanceToUser = await this.calculateDistanceToUser(
-                    restaurant,
-                    this.locationService,
+                
+                restaurant.distanceToUserInMeters =
+                    await this.calculateDistanceToUser(
+                        restaurant,
+                        this.locationService,
+                    );
+
+                restaurant.distanceToUser = this.formatDistance(
+                    restaurant.distanceToUserInMeters,
                 );
+
                 return restaurant;
             } else {
                 console.error(
@@ -126,8 +138,10 @@ export class RestaurantsService {
             await locationService.getCurrentLocation(),
         );
 
-        const distanceInMeters = Math.round(distance);
+        return Math.round(distance);
+    }
 
+    formatDistance(distanceInMeters: number) {
         const distanceInKilometers = distanceInMeters / 1000;
 
         if (distanceInKilometers >= 100) return '+99 km';

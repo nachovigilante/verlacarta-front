@@ -1,1 +1,18 @@
-<p>place-order works!</p>
+@if(this.ableToOrder){
+<form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+        <mat-label>Email de contacto</mat-label>
+        <input matInput formControlName="email" placeholder="Email" required>
+        <mat-error *ngIf="orderForm.get('email')?.hasError('invalidEmail')">
+            Este campo debe ser un email valido.
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Detalle del pedido</mat-label>
+        <textarea matInput type="url" formControlName="details" required></textarea>
+    </mat-form-field>
+    <button class="save" mat-fab extended type="submit"> <mat-icon>flatware</mat-icon>Hacer pedido</button>
+</form>
+} @else {
+<p>Tienes que estar a 50m o menos del restaurant para poder hacer un pedido</p>
+}

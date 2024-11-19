@@ -79,4 +79,42 @@ export class OrdersService {
         }
         return response.json();
     }
+
+    async placeOrder(
+        email: string,
+        detail: string,
+        type: 'PickUp' | 'DineIn',
+        restaurantId: string,
+        tableId: string | null,
+    ) {
+        const orderData = {
+            email,
+            detail,
+            type,
+            restaurantId,
+            tableId,
+            // TODO: Do not hardcode the number
+            number: 1
+        };
+
+        try {
+            const response = await fetch(environment.backendUrl + '/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData),
+            });
+
+            if (response.ok) {
+                return (await response.json()) as Order;
+            } else {
+                console.error('Failed to place order:', response.statusText);
+                return null;
+            }
+        } catch (error) {
+            console.error('Error placing order:', error);
+            return null;
+        }
+    }
 }
