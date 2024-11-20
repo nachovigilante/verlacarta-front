@@ -10,7 +10,7 @@
   </mat-form-field>
 
   <button type="button" (click)="fetchAndSetLocation()">Get Current Location</button>
-  
+
   <mat-form-field appearance="fill">
     <mat-label>Dirección</mat-label>
     <input matInput formControlName="location" required>
@@ -19,7 +19,7 @@
 
 
     <mat-label>Email de contacto</mat-label>
-    <input matInput formControlName="contactEmail" placeholder="Email" required >
+    <input matInput formControlName="contactEmail" placeholder="Email" required>
     <mat-error *ngIf="restaurantForm.get('contactEmail')?.hasError('invalidEmail')">
       Este campo debe ser un email valido.
     </mat-error>
@@ -27,7 +27,7 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Teléfono de contacto</mat-label>
-    <input matInput formControlName="contactPhone" placeholder="Teléfono" >
+    <input matInput formControlName="contactPhone" placeholder="Teléfono">
     <mat-error *ngIf="restaurantForm.get('contactPhone')?.hasError('pattern')">
       El teléfono solo puede contener números.
     </mat-error>
@@ -40,33 +40,44 @@
 
   <mat-form-field appearance="fill">
     <mat-label>Hora de apertura</mat-label>
-    <input matInput type="time" formControlName="openTime" step="60" >
+    <input matInput type="time" formControlName="openTime" step="60">
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Hora de cierre</mat-label>
-    <input matInput type="time" formControlName="closeTime" step="60" >
+    <input matInput type="time" formControlName="closeTime" step="60">
 
   </mat-form-field>
-    <mat-error *ngIf="restaurantForm.errors?.['timeMismatch']">
-      La hora de apertura debe ser anterior a la hora de cierre.
-    </mat-error>
+  <mat-error *ngIf="restaurantForm.errors?.['timeMismatch']">
+    La hora de apertura debe ser anterior a la hora de cierre.
+  </mat-error>
 
   <mat-form-field appearance="fill">
     <mat-label>Cantidad de Mesas</mat-label>
     <input matInput type="number" formControlName="tables" required>
   </mat-form-field>
 
-  <mat-slide-toggle formControlName="pickup">Pickup</mat-slide-toggle>
+  <!-- TODO: unhide -->
+  <!-- <mat-slide-toggle formControlName="pickup">Pickup</mat-slide-toggle> -->
 
   <div>
     <label for="logo">Logo (Imagen)</label>
     <br>
-    <input  id="logo" type="file" (change)="onLogoSelected($event)" accept="image/*" required>
+    <input id="logo" type="file" (change)="onLogoSelected($event)" accept="image/*" required>
   </div>
 
   <div *ngIf="logo">
-      <img [src]="logo" alt="Restaurant Logo" style="max-width: 200px; max-height: 200px; margin-top: 10px;"/>
+    <img [src]="logo" alt="Restaurant Logo" style="max-width: 200px; max-height: 200px; margin-top: 10px;" />
+  </div>
+
+  <div>
+    <label for="banner">Banner (Imagen)</label>
+    <br>
+    <input id="banner" type="file" (change)="onBannerSelected($event)" accept="image/*" required>
+  </div>
+
+  <div *ngIf="banner">
+    <img [src]="banner" alt="Restaurant Banner" style="max-width: 200px; max-height: 200px; margin-top: 10px;" />
   </div>
 
   <mat-form-field appearance="fill">
@@ -74,5 +85,5 @@
     <textarea matInput formControlName="description"></textarea>
   </mat-form-field>
 
-  <button class="save"  mat-fab extended type="submit"> <mat-icon>flatware</mat-icon> Save</button>
+  <button class="save" mat-fab extended type="submit"> <mat-icon>flatware</mat-icon> Save</button>
 </form>

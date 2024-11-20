@@ -40,14 +40,15 @@ import { LocationService } from '../../location.service';
 export class CreateRestaurantComponent {
     restaurantForm: FormGroup;
     logo: string | null = null;
-    lat: number  = 0;
-    lng: number  = 0;
+    banner: string | null = null;
+    lat: number = 0;
+    lng: number = 0;
 
     constructor(
         private fb: FormBuilder,
         private cd: ChangeDetectorRef,
         private restaurantService: RestaurantsService,
-        private locationService: LocationService
+        private locationService: LocationService,
     ) {
         this.restaurantForm = this.fb.group(
             {
@@ -69,6 +70,7 @@ export class CreateRestaurantComponent {
                 tables: ['', [Validators.required, Validators.min(1)]],
                 pickup: [false],
                 logo: [''],
+                banner: [''],
                 description: [''],
             },
             { validators: this.timeValidator },
@@ -83,8 +85,8 @@ export class CreateRestaurantComponent {
             if (openTime >= closeTime) {
                 return { timeMismatch: true };
             }
-        }else{
-            return { timeMismatch: false }; 
+        } else {
+            return { timeMismatch: false };
         }
         return null;
     }
@@ -115,23 +117,43 @@ export class CreateRestaurantComponent {
         }
     }
 
+    onBannerSelected(event: Event) {
+        const input = event.target as HTMLInputElement;
+        if (input.files && input.files.length > 0) {
+            const file = input.files[0];
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const base64String = (e.target?.result as string) || '';
+                    this.restaurantForm.get('banner')?.setValue(base64String);
+                    this.banner = base64String;
+                    this.cd.detectChanges();
+                };
+                reader.readAsDataURL(file);
+            } else {
+                console.error('Selected file is not an image.');
+            }
+        }
+    }
+
     async fetchAndSetLocation(): Promise<void> {
         try {
-          // Get the current location
-          const position = await this.locationService.getCurrentLocation();
-          
-          // Reverse geocode to get the address and city
-          const location = await this.locationService.reverseGeocode(position);
-          
-          // Set the form control 'location' with the retrieved address and city
-          this.restaurantForm.patchValue({ location });
-          this.lat = position.lat;
-          this.lng = position.lng;
-          console.log(this.lat,this.lng);
+            // Get the current location
+            const position = await this.locationService.getCurrentLocation();
+
+            // Reverse geocode to get the address and city
+            const location =
+                await this.locationService.reverseGeocode(position);
+
+            // Set the form control 'location' with the retrieved address and city
+            this.restaurantForm.patchValue({ location });
+            this.lat = position.lat;
+            this.lng = position.lng;
+            console.log(this.lat, this.lng);
         } catch (error) {
-          console.error('Error fetching location:', error);
+            console.error('Error fetching location:', error);
         }
-      }
+    }
 
     onSubmit() {
         if (this.restaurantForm.valid) {
@@ -142,9 +164,10 @@ export class CreateRestaurantComponent {
                     this.restaurantForm.value.location,
                     this.restaurantForm.value.tables,
                     this.restaurantForm.value.logo,
+                    this.restaurantForm.value.banner,
                     this.restaurantForm.value.menu,
                     this.lat,
-                    this.lng
+                    this.lng,
                 )
                 .then((response: any) => {
                     console.log('Restaurant created:', response);

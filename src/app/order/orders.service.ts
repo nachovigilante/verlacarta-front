@@ -68,22 +68,21 @@ export class OrdersService {
     }
 
     async getOrdersByRestaurantId(restaurantId: string) {
-        return (
-            fetch(environment.backendUrl + '/orders/restaurant/' + restaurantId)
-                //return fetch(environment.backendUrl + '/orders')
-                .then((response) => response.json())
-                .then((data) =>
-                    data.map((order: Order) => ({
-                        ...order,
-                        date: new Date(order.createdAt).toLocaleDateString(),
-                        // cut seconds
-                        time:
-                            new Date(order.createdAt)
-                                .toLocaleTimeString()
-                                .slice(0, -3) + 'hs',
-                    })),
-                )
-        );
+        return fetch(
+            environment.backendUrl + '/orders/restaurant/' + restaurantId,
+        )
+            .then((response) => response.json())
+            .then((data) =>
+                data.map((order: Order) => ({
+                    ...order,
+                    date: new Date(order.createdAt).toLocaleDateString(),
+                    // cut seconds
+                    time:
+                        new Date(order.createdAt)
+                            .toLocaleTimeString()
+                            .slice(0, -6) + 'hs',
+                })),
+            );
     }
 
     async updateOrderStatus(orderId: string, newStatus: number) {

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { LocationService } from '../location.service';
+import { Table } from '../tables.service';
 
 export type Restaurant = {
     id: string;
@@ -14,6 +15,7 @@ export type Restaurant = {
     menu: string;
     distanceToUser: string;
     distanceToUserInMeters: number;
+    Table: Table[];
 };
 
 @Injectable({
@@ -37,6 +39,7 @@ export class RestaurantsService {
                         restaurant.distanceToUser = this.formatDistance(
                             restaurant.distanceToUserInMeters,
                         );
+
                         return restaurant;
                     }),
                 ),
@@ -82,6 +85,7 @@ export class RestaurantsService {
         location: string,
         tables: number,
         logo: string,
+        banner: string,
         menu: string,
         lat: number,
         lng: number,
@@ -93,6 +97,7 @@ export class RestaurantsService {
             menu,
             tables,
             logo,
+            banner,
             lat,
             lng,
         };

@@ -48,7 +48,6 @@ export class AdminLoginComponent {
 
     async onSubmit() {
         if (!this.loginForm.valid) {
-            console.log('AAAAAAAAA');
             return;
         } else {
             try {

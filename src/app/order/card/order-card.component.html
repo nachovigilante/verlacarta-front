@@ -17,7 +17,7 @@
                 <p>{{ order.restaurant.location }}</p>
             </div>
         </div>
-        @if (admin) {
+        @if (admin && order.status < 4) {
         <button (click)="changeStatus()">
             Cambiar estado
         </button>

@@ -2,20 +2,22 @@
     @if (this.restaurant){
     <h2>Administrador de {{this.restaurant.name}}</h2>
     <div class="tables">
-        @for (tableNumber of this.tables; track $index){
+        @for (table of this.tables; track $index){
         <div class="table">
             <div class="title">
-                <h3>Mesa {{tableNumber}}</h3>
+                <h3>Mesa {{table.number}}</h3>
                 <button>Ver QR</button>
             </div>
             <ul class="orders">
-                @for (order of this.orders; track order.id){
+                @for (order of this.ordersByTable[table.id]; track order.id){
                 <li>
-                    <div class="order">
-                        <h4>Orden {{order.number}}</h4>
-                        <p>Estado: {{order.status}}</p>
-                        <button>Ver detalles</button>
-                    </div>
+                    <app-order-card [order]="order" [admin]="true"
+                        (onStatusChange)="changeOrderStatus($event)"></app-order-card>
+                </li>
+                }
+                @if (this.ordersByTable[table.id].length === 0){
+                <li>
+                    <p>No hay pedidos en esta mesa</p>
                 </li>
                 }
             </ul>
