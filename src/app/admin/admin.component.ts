@@ -5,11 +5,12 @@ import { Restaurant } from '../restaurant/restaurants.service';
 import { Order, OrdersService } from '../order/orders.service';
 import { Table } from '../tables.service';
 import { OrderCardComponent } from '../order/card/order-card.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @Component({
     selector: 'app-admin',
     standalone: true,
-    imports: [OrderCardComponent],
+    imports: [OrderCardComponent, QRCodeModule],
     templateUrl: './admin.component.html',
     styleUrl: './admin.component.scss',
 })
@@ -18,6 +19,7 @@ export class AdminComponent {
     tables: Table[] = [];
     orders: Order[] = [];
     ordersByTable: { [key: string]: Order[] } = {};
+    pickupOrders: Order[] = [];
 
     constructor(
         private authService: AuthService,
@@ -34,6 +36,8 @@ export class AdminComponent {
                 this.ordersByTable[table.id] = [];
             });
 
+            this.pickupOrders = [];
+
             this.fetchOrders(this.restaurant!.id);
         }
     }
@@ -47,6 +51,10 @@ export class AdminComponent {
                     this.orders.filter((order) => order.tableId === table.id) ||
                     [];
             });
+
+            this.pickupOrders = this.orders.filter(
+                (order) => order.tableId === null,
+            );
         });
     }
 
@@ -64,6 +72,17 @@ export class AdminComponent {
                 });
         } catch (error) {
             console.error('Failed to update order status:', error);
+        }
+    }
+
+    showQRCode($event: MouseEvent) {
+        const button = $event.target as HTMLElement;
+        console.log(button);
+        const qrCode = document.getElementById('qr-' + button.id);
+        console.log(qrCode);
+
+        if (qrCode) {
+            qrCode.classList.toggle('active');
         }
     }
 }

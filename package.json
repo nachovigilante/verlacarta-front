@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
     "@types/node": "^22.7.8",
+    "angularx-qrcode": "^18.0.2",
     "dotenv": "^16.4.5",
     "fs": "0.0.1-security",
     "mapbox-gl": "^3.7.0",
