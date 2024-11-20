@@ -32,8 +32,6 @@ export const routes: Routes = [
     { path: 'restaurant/:id/order', component: PlaceOrderComponent },
     { path: 'restaurant/:id/order/:tableId', component: PlaceOrderComponent },
     { path: 'orders', component: OrdersComponent },
-    { path: 'admin/auth', component: OrdersByRestaurantComponent },
-    { path: 'admin/register', component: OrdersByRestaurantComponent },
     {
         path: 'admin/login',
         component: AdminLoginComponent,

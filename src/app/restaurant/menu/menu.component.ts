@@ -15,6 +15,7 @@ export class MenuComponent {
     menuPdfUrl: string = '';
     table: Table | null = null;
     restaurant: Restaurant | null = null;
+    pickup: boolean = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -26,6 +27,8 @@ export class MenuComponent {
     ngOnInit(): void {
         this.route.paramMap.subscribe(async (params) => {
             const id = params.get('id');
+
+            console.log(this.route);
 
             if (!id) {
                 this.router.navigate(['/']);
@@ -44,13 +47,17 @@ export class MenuComponent {
 
             this.menuPdfUrl = this.restaurant.menu;
 
-            if (tableId) {
+            if (!tableId) return;
+
+            if (tableId !== 'pickup') {
                 this.table = await this.tablesService.getTableById(tableId);
 
                 if (!this.table) {
                     this.router.navigate(['/']);
                     return;
                 }
+            } else {
+                this.pickup = true;
             }
         });
     }

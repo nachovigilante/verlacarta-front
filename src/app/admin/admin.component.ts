@@ -21,10 +21,7 @@ export class AdminComponent {
         private router: Router,
         private orderService: OrdersService,
     ) {
-        // TODO: Fetch tables count from backend
-        this.tables = [1, 2, 3, 4];
         if (!this.authService.checkAdmin()) {
-            // TODO: reactivate this line
             this.router.navigate(['/admin/login']);
         } else {
             this.restaurant = this.authService.loggedInRestaurant;

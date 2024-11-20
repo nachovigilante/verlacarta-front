@@ -87,16 +87,21 @@ export class PlaceOrderComponent {
                 return;
             }
 
-            if (this.restaurant.distanceToUserInMeters <= 50) {
-                this.ableToOrder = true;
-            } else {
-                this.ableToOrder = false;
-            }
-
-            if (this.tableId) {
+            if (this.tableId && this.tableId !== 'pickup') {
                 this.type = 'DineIn';
             } else {
                 this.type = 'PickUp';
+            }
+            
+            console.log(this.type);
+
+            if (
+                this.restaurant.distanceToUserInMeters <= 50 ||
+                this.type === 'PickUp'
+            ) {
+                this.ableToOrder = true;
+            } else {
+                this.ableToOrder = false;
             }
         });
     }

@@ -1,25 +1,47 @@
 import { Injectable } from '@angular/core';
 import { Restaurant } from '../restaurant/restaurants.service';
 import { environment } from '../../environments/environment';
+import { Table } from '../tables.service';
+
+export enum OrderStatus {
+    PENDING = 0,
+    ACCEPTED = 1,
+    REJECTED = 2,
+    READY = 3,
+    DELIVERED = 4,
+}
+
+export const orderStatusNames = {
+    DineIn: [
+        'Pendiente',
+        'Aceptado',
+        'Rechazado',
+        'Listo para servir',
+        'Entregado',
+    ],
+    PickUp: [
+        'Pendiente',
+        'Aceptado',
+        'Rechazado',
+        'Listo para retirar',
+        'Retirado',
+    ],
+};
 
 export type Order = {
     id: string;
     number: number;
     type: 'PickUp' | 'DineIn';
     detail: string;
-    status: string; // TODO: Use an enum
+    status: OrderStatus;
     tableId: string;
     createdAt: string;
     date: string;
     time: string;
     updatedAt: string;
     email: string;
-    table: {
-        id: string;
-        restaurantId: string;
-        number: number;
-        restaurant: Restaurant;
-    };
+    table: Table;
+    restaurant: Restaurant;
 };
 
 @Injectable({
@@ -31,17 +53,18 @@ export class OrdersService {
     async getOrders() {
         return fetch(environment.backendUrl + '/orders')
             .then((response) => response.json())
-            .then((data) =>
-                data.map((order: Order) => ({
+            .then((data) => {
+                console.log(data);
+
+                return data.map((order: Order) => ({
                     ...order,
                     date: new Date(order.createdAt).toLocaleDateString(),
-                    // cut seconds
                     time:
                         new Date(order.createdAt)
                             .toLocaleTimeString()
-                            .slice(0, -3) + 'hs',
-                })),
-            );
+                            .slice(0, -6) + 'hs',
+                }));
+            });
     }
 
     async getOrdersByRestaurantId(restaurantId: string) {
@@ -63,7 +86,7 @@ export class OrdersService {
         );
     }
 
-    async updateOrderStatus(orderId: string, newStatus: string) {
+    async updateOrderStatus(orderId: string, newStatus: number) {
         const response = await fetch(
             `${environment.backendUrl}/orders/${orderId}/status`,
             {
@@ -92,9 +115,7 @@ export class OrdersService {
             detail,
             type,
             restaurantId,
-            tableId,
-            // TODO: Do not hardcode the number
-            number: 1
+            tableId: type === 'DineIn' ? tableId : null,
         };
 
         try {

@@ -1,5 +1,5 @@
 import { Component, Input, Output } from '@angular/core';
-import { Order } from '../orders.service';
+import { Order, orderStatusNames } from '../orders.service';
 import { EventEmitter } from '@angular/core';
 
 @Component({
@@ -12,7 +12,8 @@ import { EventEmitter } from '@angular/core';
 export class OrderCardComponent {
     @Input() order!: Order;
     @Input() admin = false;
-
+    orderStatusNames = orderStatusNames;
+    
     @Output() onStatusChange = new EventEmitter<Order>();
 
     changeStatus() {

@@ -15,12 +15,6 @@ import { Router, RouterOutlet } from '@angular/router';
 export class OrdersByRestaurantComponent {
     orders: Order[] = [];
     id: string = '';
-    orderStates = [
-        'Aceptado',
-        'En preparación',
-        'Listo para ser retirado',
-        'Próximo a ser llevado',
-    ];
     restaurant: Restaurant | null = null;
 
     constructor(
@@ -43,19 +37,16 @@ export class OrdersByRestaurantComponent {
 
     @Output() async changeOrderStatus(order: Order) {
         try {
-            const currentIndex = this.orderStates.indexOf(order.status);
-            if (currentIndex < this.orderStates.length - 1) {
-                const newStatus = this.orderStates[currentIndex + 1];
-                this.orderService
-                    .updateOrderStatus(order.id, newStatus)
-                    .then((data) => {
-                        console.log('Order status updated:', data);
-                        order.status = newStatus;
-                    })
-                    .catch((error) => {
-                        console.error('Error updating order status:', error);
-                    });
-            }
+            const newStatus = order.status < 4 ? order.status + 1 : 4;
+            this.orderService
+                .updateOrderStatus(order.id, newStatus)
+                .then((data) => {
+                    console.log('Order status updated:', data);
+                    order.status = newStatus;
+                })
+                .catch((error) => {
+                    console.error('Error updating order status:', error);
+                });
         } catch (error) {
             console.error('Failed to update order status:', error);
         }

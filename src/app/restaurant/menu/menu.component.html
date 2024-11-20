@@ -5,7 +5,13 @@
     <pdf-viewer [src]="menuPdfUrl" id="viewer"></pdf-viewer>
     @if (this.table) {
     <div class="order-button-container">
-        <a [href]="'/restaurant/' + this.restaurant.id + '/order/' + this.table.id">Realizar pedido - Mesa {{ this.table.number }}</a>
+        <a [href]="'/restaurant/' + this.restaurant.id + '/order/' + this.table.id">Realizar pedido - Mesa {{
+            this.table.number }}</a>
+    </div>
+    }
+    @if (this.pickup) {
+    <div class="order-button-container">
+        <a [href]="'/restaurant/' + this.restaurant.id + '/order/pickup'">Realizar pedido para llevar</a>
     </div>
     }
 </main>
