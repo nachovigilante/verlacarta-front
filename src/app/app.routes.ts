@@ -9,6 +9,7 @@ import { RestaurantDetailsComponent } from './restaurant/restaurant-detail/resta
 import { AdminLoginComponent } from './auth/admin-login/admin-login.component';
 import { AdminComponent } from './admin/admin.component';
 import { PlaceOrderComponent } from './order/place-order/place-order.component';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
 
 export const routes: Routes = [
     {
@@ -32,6 +33,7 @@ export const routes: Routes = [
     { path: 'restaurant/:id/order', component: PlaceOrderComponent },
     { path: 'restaurant/:id/order/:tableId', component: PlaceOrderComponent },
     { path: 'orders', component: OrdersComponent },
+    { path: 'orders/:id', component: OrderDetailComponent },
     {
         path: 'admin/login',
         component: AdminLoginComponent,

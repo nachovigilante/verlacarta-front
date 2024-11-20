@@ -129,7 +129,7 @@ export class PlaceOrderComponent {
                     )
                     .then((order) => {
                         if (order) {
-                            this.router.navigate(['/order', order.id]);
+                            this.router.navigate(['/orders', order.id]);
                         }
                     });
             }

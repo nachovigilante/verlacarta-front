@@ -137,4 +137,10 @@ export class OrdersService {
             return null;
         }
     }
+
+    async getOrderById(orderId: string) {
+        return fetch(environment.backendUrl + '/orders/' + orderId)
+            .then((response) => response.json())
+            .then((data) => data as Order);
+    }
 }
