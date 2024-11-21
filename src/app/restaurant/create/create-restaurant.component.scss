@@ -14,3 +14,8 @@ form {
 ::ng-deep .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-disabled) .mdc-switch__track::after {
   background-color: rgba(181,26,26,0.65) !important;
 }
+
+#map {
+    height: 500px;
+    width: 500px;
+}

@@ -46,10 +46,30 @@ export class LocationService {
         const json = await result.json();
 
         const address = json.features[0].properties.context.address.name;
-
         const city = json.features[0].properties.context.region.name;
-        // console.log(`${address}, ${city}`)
+
         return `${address}, ${city}`;
+    }
+
+    async geocode(input: string) {
+        const apiKey = environment.apiKey;
+        const result = await fetch(
+            `https://api.mapbox.com/search/geocode/v6/forward?q=${input}&language=es&access_token=${apiKey}`,
+        );
+
+        const json = await result.json();
+
+        const address = json.features[0].properties.context.address.name;
+        const city = json.features[0].properties.context.region.name;
+
+        const location = `${address}, ${city}`;
+
+        const position = {
+            lat: json.features[0].geometry.coordinates[0],
+            lng: json.features[0].geometry.coordinates[1],
+        };
+
+        return { location, position };
     }
 
     distanceBetween(position1: Position, position2: Position) {

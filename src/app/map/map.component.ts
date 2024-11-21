@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { LocationService } from '../location.service';
 import { environment } from '../../environments/environment';
@@ -40,23 +40,6 @@ export class MapComponent {
         this.lat = position.lat;
         this.lng = position.lng;
 
-        const geojson = {
-            type: 'FeatureCollection',
-            features: [
-                {
-                    type: 'Feature',
-                    geometry: {
-                        type: 'Point',
-                        coordinates: [this.lng, this.lat],
-                    },
-                    properties: {
-                        title: 'Vos',
-                        description: 'Acá va la dirección de tu ubicación',
-                    },
-                },
-            ],
-        };
-
         this.map = new mapboxgl.Map({
             accessToken: environment.apiKey,
             container: 'map',
@@ -65,18 +48,18 @@ export class MapComponent {
             center: [this.lng, this.lat],
         });
 
-        // TODO: This for loop is not necessary
-        for (const point of geojson.features) {
-            new mapboxgl.Marker()
-                .setLngLat(point.geometry.coordinates as mapboxgl.LngLatLike)
-                .setPopup(
-                    new mapboxgl.Popup({ offset: 25 }) // add popups
-                        .setHTML(
-                            `<h3>${point.properties.title}</h3><p>${point.properties.description}</p>`,
-                        ),
-                )
-                .addTo(this.map);
-        }
+        const location = await this.locationService.reverseGeocode({
+            lat: this.lat,
+            lng: this.lng,
+        });
+
+        new mapboxgl.Marker()
+            .setLngLat([this.lng, this.lat] as mapboxgl.LngLatLike)
+            .setPopup(
+                new mapboxgl.Popup({ offset: 25 }) // add popups
+                    .setHTML(`<h3>Acá estas vos</h3><p>${location}</p>`),
+            )
+            .addTo(this.map);
 
         for (const restaurant of this.restaurants) {
             const geojson = {
@@ -90,14 +73,13 @@ export class MapComponent {
                         },
                         properties: {
                             title: restaurant.name,
-                            description: restaurant.location, // TODO: Add more details
+                            location: restaurant.location,
                             image: restaurant.logo,
                         },
                     },
                 ],
             };
 
-            
             const markerEl = document.createElement('div');
             markerEl.className = 'restaurant-marker';
             markerEl.style.backgroundImage = `url(${restaurant.logo})`;
@@ -109,7 +91,7 @@ export class MapComponent {
                     )
                     .setPopup(
                         new mapboxgl.Popup().setHTML(
-                            `<h3>${point.properties.title}</h3><p>${point.properties.description}</p>`,
+                            `<h3>${point.properties.title}</h3><p>${point.properties.location}</p>`,
                         ),
                     )
                     .addTo(this.map);

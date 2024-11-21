@@ -2,6 +2,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    SimpleChanges,
 } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -19,6 +20,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { RestaurantsService } from '../restaurants.service';
 import { LocationService } from '../../location.service';
+import { environment } from '../../../environments/environment';
+import * as mapboxgl from 'mapbox-gl';
 
 @Component({
     selector: 'app-create-restaurant',
@@ -43,6 +46,9 @@ export class CreateRestaurantComponent {
     banner: string | null = null;
     lat: number = 0;
     lng: number = 0;
+    map: mapboxgl.Map | undefined;
+    style = 'mapbox://styles/mapbox/streets-v11';
+    marker: mapboxgl.Marker | undefined;
 
     constructor(
         private fb: FormBuilder,
@@ -136,20 +142,16 @@ export class CreateRestaurantComponent {
         }
     }
 
-    async fetchAndSetLocation(): Promise<void> {
+    async onLocationChange($event: Event) {
+        const input = $event.target as HTMLInputElement;
+        const inputLocation = input.value;
+
         try {
-            // Get the current location
-            const position = await this.locationService.getCurrentLocation();
+            const geocode = await this.locationService.geocode(inputLocation);
 
-            // Reverse geocode to get the address and city
-            const location =
-                await this.locationService.reverseGeocode(position);
-
-            // Set the form control 'location' with the retrieved address and city
-            this.restaurantForm.patchValue({ location });
-            this.lat = position.lat;
-            this.lng = position.lng;
-            console.log(this.lat, this.lng);
+            this.restaurantForm.patchValue({ location: geocode.location });
+            this.lat = geocode.position.lat;
+            this.lng = geocode.position.lng;
         } catch (error) {
             console.error('Error fetching location:', error);
         }
@@ -179,5 +181,48 @@ export class CreateRestaurantComponent {
             console.log(this.restaurantForm);
             console.log('Form is invalid');
         }
+    }
+
+    async onDragEnd(data: { target: mapboxgl.Marker }) {
+        const lngLat = data.target.getLngLat();
+
+        this.lat = lngLat.lat;
+        this.lng = lngLat.lng;
+
+        const location = await this.locationService.reverseGeocode({
+            lat: this.lat,
+            lng: this.lng,
+        });
+
+        this.restaurantForm.patchValue({ location });
+    }
+
+    async ngOnInit() {
+        const position = await this.locationService.getCurrentLocation();
+        this.lat = position.lat;
+        this.lng = position.lng;
+
+        this.map = new mapboxgl.Map({
+            accessToken: environment.apiKey,
+            container: 'map',
+            style: this.style,
+            zoom: 14,
+            center: [this.lng, this.lat],
+        });
+
+        this.marker = new mapboxgl.Marker({
+            draggable: true,
+        })
+            .setLngLat([this.lng, this.lat] as mapboxgl.LngLatLike)
+            .setPopup(
+                new mapboxgl.Popup({ offset: 25 }).setHTML(
+                    `<h3>Acá está tu restaurant</h3><p>Podés mover este marcador</p>`,
+                ),
+            )
+            .addTo(this.map);
+
+        this.marker.on('dragend', (data) =>
+            this.onDragEnd({ target: data.target }),
+        );
     }
 }
