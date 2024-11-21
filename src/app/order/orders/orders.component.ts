@@ -18,9 +18,7 @@ export class OrdersComponent {
         e.preventDefault();
 
         const form = e.target! as HTMLFormElement;
-        const searchValue = parseInt(
-            (form.elements[0] as HTMLInputElement).value,
-        );
+        const searchValue = (form.elements[0] as HTMLInputElement).value;
 
         if (!searchValue) {
             this.filteredOrders = this.orders;
@@ -28,7 +26,7 @@ export class OrdersComponent {
         }
 
         this.filteredOrders = this.orders.filter(
-            (order) => order.number === searchValue,
+            (order) => order.email.startsWith(searchValue),
         );
 
         console.log(this.filteredOrders);

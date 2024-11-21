@@ -1,5 +1,6 @@
 @if(this.ableToOrder){
 <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+    <h1>Hacé tu pedido</h1>
     <mat-form-field appearance="fill">
         <mat-label>Email de contacto</mat-label>
         <input matInput formControlName="email" placeholder="Email" required>

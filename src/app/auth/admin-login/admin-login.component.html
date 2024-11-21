@@ -1,12 +1,13 @@
 <div class="main">
     <form [formGroup]="this.loginForm" (ngSubmit)="onSubmit()">
+        <h1>Login</h1>
         <mat-form-field appearance="fill">
             <mat-label>Nombre del restaurant</mat-label>
             <input matInput formControlName="name" required>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Contraseña</mat-label>
-            <input matInput formControlName="password" required>
+            <input matInput formControlName="password" type="password" required>
         </mat-form-field>
         <button type="submit" mat-raised-button color="primary">Ingresar</button>
         <p>Tu restaurant todavía no está en <b>VerLaCarta</b>? <a href="/restaurant/register">Registrar</a></p>
