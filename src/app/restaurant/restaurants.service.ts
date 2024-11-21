@@ -12,6 +12,7 @@ export type Restaurant = {
     lng: number;
     description: string;
     logo: string;
+    banner: string;
     menu: string;
     distanceToUser: string;
     distanceToUserInMeters: number;
@@ -54,7 +55,7 @@ export class RestaurantsService {
 
             if (response.ok) {
                 const restaurant = (await response.json()) as Restaurant;
-                
+
                 restaurant.distanceToUserInMeters =
                     await this.calculateDistanceToUser(
                         restaurant,
