@@ -128,4 +128,16 @@ export class AdminComponent {
             qrCode.classList.toggle('active');
         }
     }
+
+    copyToClipboard(id: string) {
+        const content =
+            'https://verlacarta-front.vercel.app/restaurant/' +
+            this.restaurant!.id +
+            '/order/' +
+            id;
+
+        navigator.clipboard.writeText(content).then(() => {
+            console.log('Copied to clipboard:', content);
+        });
+    }
 }

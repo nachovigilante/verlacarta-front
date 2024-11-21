@@ -38,7 +38,10 @@
                     <mat-icon aria-hidden="false" aria-label="Show QR Code" fontIcon="qr_code"></mat-icon>
                 </button>
                 <div class="qr" [id]="'qr-' + table.id">
-                    <h3>QR Mesa {{table.number}}</h3>
+                    <div class="header">
+                        <h3>QR Mesa {{table.number}}</h3>
+                        <button (click)="this.copyToClipboard('https://verlacarta-front.vercel.app/restaurant/' + this.restaurant.id + '/order/' + table.id)">Copiar</button>
+                    </div>
                     <qrcode
                         [qrdata]="'https://verlacarta-front.vercel.app/restaurant/' + this.restaurant.id + '/order/' + table.id"
                         [width]="256" [errorCorrectionLevel]="'M'"></qrcode>

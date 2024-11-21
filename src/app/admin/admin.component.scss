@@ -23,7 +23,7 @@ main {
             display: flex;
             justify-content: space-between;
 
-            button{
+            button {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -54,6 +54,12 @@ main {
                 overflow: hidden;
                 background-color: white;
                 box-shadow: 0px 0px 10px 0px #ccc;
+
+                .header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
 
                 &.active {
                     opacity: 1;
