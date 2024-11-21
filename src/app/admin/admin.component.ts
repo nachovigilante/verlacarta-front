@@ -6,11 +6,12 @@ import { Order, OrdersService, OrderStatus } from '../order/orders.service';
 import { Table } from '../tables.service';
 import { OrderCardComponent } from '../order/card/order-card.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-admin',
     standalone: true,
-    imports: [OrderCardComponent, QRCodeModule],
+    imports: [OrderCardComponent, QRCodeModule, MatIconModule],
     templateUrl: './admin.component.html',
     styleUrl: './admin.component.scss',
 })
