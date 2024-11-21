@@ -27,8 +27,8 @@
                 color: black;
             }
 
-            &.accpeted {
-                background-color: #2ecc71;
+            &.accepted {
+                background-color: #56e569;
             }
 
             &.ready {
@@ -37,6 +37,10 @@
 
             &.rejected {
                 background-color: #e74c3c;
+            }
+
+            &.delivered {
+                background-color: #000000;
             }
         }
     }

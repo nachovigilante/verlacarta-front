@@ -2,7 +2,7 @@ import { Component, Output } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { Restaurant } from '../restaurant/restaurants.service';
-import { Order, OrdersService } from '../order/orders.service';
+import { Order, OrdersService, OrderStatus } from '../order/orders.service';
 import { Table } from '../tables.service';
 import { OrderCardComponent } from '../order/card/order-card.component';
 import { QRCodeModule } from 'angularx-qrcode';
@@ -58,9 +58,8 @@ export class AdminComponent {
         });
     }
 
-    @Output() async changeOrderStatus(order: Order) {
+    async updateOrderStatus(order: Order, newStatus: number) {
         try {
-            const newStatus = order.status < 4 ? order.status + 1 : 4;
             this.orderService
                 .updateOrderStatus(order.id, newStatus)
                 .then((data) => {
@@ -72,6 +71,52 @@ export class AdminComponent {
                 });
         } catch (error) {
             console.error('Failed to update order status:', error);
+        }
+    }
+
+    @Output() acceptOrder(order: Order) {
+        if (order.status !== OrderStatus.PENDING)
+            throw new Error('Order is not pending');
+
+        this.updateOrderStatus(order, OrderStatus.ACCEPTED);
+    }
+
+    @Output() rejectOrder(order: Order) {
+        if (order.status !== OrderStatus.PENDING)
+            throw new Error('Order is not pending');
+
+        this.updateOrderStatus(order, OrderStatus.REJECTED);
+    }
+
+    @Output() readyOrder(order: Order) {
+        if (order.status !== OrderStatus.ACCEPTED)
+            throw new Error('Order is not accepted');
+
+        this.updateOrderStatus(order, OrderStatus.READY);
+    }
+
+    @Output() deliverOrder(order: Order) {
+        if (order.status !== OrderStatus.READY)
+            throw new Error('Order is not ready');
+
+        this.updateOrderStatus(order, OrderStatus.DELIVERED);
+    }
+
+    @Output() async changeOrderStatus({
+        order,
+        newStatus,
+    }: {
+        order: Order;
+        newStatus: OrderStatus;
+    }) {
+        if (newStatus === OrderStatus.ACCEPTED) {
+            this.acceptOrder(order);
+        } else if (newStatus === OrderStatus.REJECTED) {
+            this.rejectOrder(order);
+        } else if (newStatus === OrderStatus.READY) {
+            this.readyOrder(order);
+        } else if (newStatus === OrderStatus.DELIVERED) {
+            this.deliverOrder(order);
         }
     }
 

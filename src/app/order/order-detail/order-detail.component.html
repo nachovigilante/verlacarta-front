@@ -5,7 +5,7 @@
             <div class="header">
                 <h1>Pedido #{{this.order.number}}</h1>
                 <span [class]="'status ' + this.orderStatusClasses[this.order.status] ">{{
-                    this.orderStatusNames[this.order.type][this.order.status] }}</span>
+                    this.orderStatusNames[this.order.status] }}</span>
             </div>
             <div class="extended-status">
                 {{this.orderStatusDescriptions[this.order.status]}}

@@ -2,7 +2,7 @@
     <div class="order-info">
         <div class="header">
             <div class="left">
-                <span class="status">{{ this.orderStatusNames[order.type][order.status] }}</span>
+                <span class="status">{{ this.orderStatusNames[order.status] }}</span>
                 <span>•</span>
                 <span class="date">{{ order.date }}</span>
                 <span>•</span>
@@ -17,10 +17,25 @@
                 <p>{{ order.restaurant.location }}</p>
             </div>
         </div>
-        @if (admin && order.status < 4) {
-        <button (click)="changeStatus()">
-            Cambiar estado
-        </button>
-        }
+        <div class="buttons">
+            @if (admin && order.status === 0) {
+            <button (click)="acceptOrder()">
+                Acceptar
+            </button>
+            <button (click)="rejectOrder()">
+                Rechazar
+            </button>
+            }
+            @if (admin && order.status === 1) {
+            <button (click)="readyOrder()">
+                Listo
+            </button>
+            }
+            @if (admin && order.status === 2) {
+            <button (click)="deliverOrder()">
+                Entregar
+            </button>
+            }
+        </div>
     </div>
 </div>

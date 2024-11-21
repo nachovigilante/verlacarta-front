@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { RestaurantsListComponent } from './restaurant/list/restaurants-list.component';
 import { OrdersComponent } from './order/orders/orders.component';
-import { OrdersByRestaurantComponent } from './order/orders-by-restaurant/orders-by-restaurant.component';
 import { MapComponent } from './map/map.component';
 import { CreateRestaurantComponent } from './restaurant/create/create-restaurant.component';
 import { MenuComponent } from './restaurant/menu/menu.component';
@@ -39,5 +38,4 @@ export const routes: Routes = [
         component: AdminLoginComponent,
     },
     { path: 'admin', component: AdminComponent },
-    { path: 'admin/orders', component: OrdersByRestaurantComponent },
 ];

@@ -6,26 +6,17 @@ import { Table } from '../tables.service';
 export enum OrderStatus {
     PENDING = 0,
     ACCEPTED = 1,
-    REJECTED = 2,
-    READY = 3,
-    DELIVERED = 4,
+    REJECTED = -1,
+    READY = 2,
+    DELIVERED = 3,
 }
 
 export const orderStatusNames = {
-    DineIn: [
-        'Pendiente',
-        'Aceptado',
-        'Rechazado',
-        'Listo para servir',
-        'Entregado',
-    ],
-    PickUp: [
-        'Pendiente',
-        'Aceptado',
-        'Rechazado',
-        'Listo para retirar',
-        'Retirado',
-    ],
+    [OrderStatus.PENDING]: 'Pendiente',
+    [OrderStatus.ACCEPTED]: 'Aceptado',
+    [OrderStatus.REJECTED]: 'Rechazado',
+    [OrderStatus.READY]: 'Listo',
+    [OrderStatus.DELIVERED]: 'Entregado',
 };
 
 export type Order = {
