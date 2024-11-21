@@ -152,6 +152,12 @@ export class CreateRestaurantComponent {
             this.restaurantForm.patchValue({ location: geocode.location });
             this.lat = geocode.position.lat;
             this.lng = geocode.position.lng;
+
+            console.log('Geocode:', geocode);
+
+            this.marker?.setLngLat([this.lng, this.lat] as mapboxgl.LngLatLike);
+
+            console.log(this.marker?.getLngLat);
         } catch (error) {
             console.error('Error fetching location:', error);
         }
@@ -188,6 +194,8 @@ export class CreateRestaurantComponent {
 
         this.lat = lngLat.lat;
         this.lng = lngLat.lng;
+
+        console.log(lngLat);
 
         const location = await this.locationService.reverseGeocode({
             lat: this.lat,
