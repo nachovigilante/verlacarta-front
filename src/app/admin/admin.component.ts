@@ -121,11 +121,8 @@ export class AdminComponent {
         }
     }
 
-    showQRCode($event: MouseEvent) {
-        const button = $event.target as HTMLElement;
-        console.log(button);
-        const qrCode = document.getElementById('qr-' + button.id);
-        console.log(qrCode);
+    showQRCode(id: string) {
+        const qrCode = document.getElementById('qr-' + id);
 
         if (qrCode) {
             qrCode.classList.toggle('active');

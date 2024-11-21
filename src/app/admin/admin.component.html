@@ -6,10 +6,11 @@
             <div class="title">
                 <h3>Pickup
                 </h3>
-                <button id="pickup" (click)="this.showQRCode($event)"><mat-icon aria-hidden="false"
-                        aria-label="Show QR Code" fontIcon="qr_code"></mat-icon>
+                <button (click)="this.showQRCode('pickup')"><mat-icon aria-hidden="false" aria-label="Show QR Code"
+                        fontIcon="qr_code"></mat-icon>
                 </button>
                 <div class="qr" [id]="'qr-pickup'">
+                    <h3>QR Pickup</h3>
                     <qrcode
                         [qrdata]="'https://verlacarta-front.vercel.app/restaurant/' + this.restaurant.id + '/order/pickup'"
                         [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
@@ -33,10 +34,11 @@
         <div class="table">
             <div class="title">
                 <h3>Mesa {{table.number}}</h3>
-                <button (click)="this.showQRCode($event)" [id]="table.id">
+                <button (click)="this.showQRCode(table.id)">
                     <mat-icon aria-hidden="false" aria-label="Show QR Code" fontIcon="qr_code"></mat-icon>
                 </button>
                 <div class="qr" [id]="'qr-' + table.id">
+                    <h3>QR Mesa {{table.number}}</h3>
                     <qrcode
                         [qrdata]="'https://verlacarta-front.vercel.app/restaurant/' + this.restaurant.id + '/order/' + table.id"
                         [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
