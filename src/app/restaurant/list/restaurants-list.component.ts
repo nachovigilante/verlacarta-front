@@ -17,6 +17,12 @@ export class RestaurantsListComponent {
     fetchRestaurants() {
         this.restaurantsService
             .getRestaurants()
+            .then((data) =>
+                data.sort(
+                    (a, b) =>
+                        a.distanceToUserInMeters - b.distanceToUserInMeters,
+                ),
+            )
             .then((data) => (this.restaurants = data));
     }
 
