@@ -1,0 +1,100 @@
+.order {
+    padding: 20px;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+
+        h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            color: white;
+            padding: 4px 6px;
+            border-radius: 5px;
+
+            &.pending {
+                background-color: #f1c40f;
+                color: black;
+            }
+
+            &.accpeted {
+                background-color: #2ecc71;
+            }
+
+            &.ready {
+                background-color: #3498db;
+            }
+
+            &.rejected {
+                background-color: #e74c3c;
+            }
+        }
+    }
+
+    .detail {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+        margin-top: 30px;
+
+        > div {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+    }
+}
+
+.restaurant-display {
+    display: flex;
+    gap: 15px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+
+    img {
+        width: 50px;
+        height: 50px;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .restaurant-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        p {
+            font-size: 14px;
+            color: #777;
+            margin: 0;
+        }
+    }
+}
+
+.date > div{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-size: 16px;
+    color: #777;
+}

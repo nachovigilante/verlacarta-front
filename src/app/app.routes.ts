@@ -9,7 +9,7 @@ import { RestaurantDetailsComponent } from './restaurant/restaurant-detail/resta
 import { AdminLoginComponent } from './auth/admin-login/admin-login.component';
 import { AdminComponent } from './admin/admin.component';
 import { PlaceOrderComponent } from './order/place-order/place-order.component';
-import { OrderDetailComponent } from './order-detail/order-detail.component';
+import { OrderDetailComponent } from './order/order-detail/order-detail.component';
 
 export const routes: Routes = [
     {

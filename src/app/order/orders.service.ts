@@ -76,7 +76,6 @@ export class OrdersService {
                 data.map((order: Order) => ({
                     ...order,
                     date: new Date(order.createdAt).toLocaleDateString(),
-                    // cut seconds
                     time:
                         new Date(order.createdAt)
                             .toLocaleTimeString()
@@ -141,6 +140,12 @@ export class OrdersService {
     async getOrderById(orderId: string) {
         return fetch(environment.backendUrl + '/orders/' + orderId)
             .then((response) => response.json())
-            .then((data) => data as Order);
+            .then((data) => ({
+                ...data,
+                date: new Date(data.createdAt).toLocaleDateString(),
+                time:
+                    new Date(data.createdAt).toLocaleTimeString().slice(0, -3) +
+                    'hs',
+            }));
     }
 }

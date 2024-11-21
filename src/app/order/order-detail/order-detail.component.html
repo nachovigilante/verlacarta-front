@@ -1,0 +1,39 @@
+<div>
+    @if (this.order) {
+    <div class="order">
+        <div class="order-info">
+            <div class="header">
+                <h1>Pedido #{{this.order.number}}</h1>
+                <span [class]="'status ' + this.orderStatusClasses[this.order.status] ">{{
+                    this.orderStatusNames[this.order.type][this.order.status] }}</span>
+            </div>
+            <div class="extended-status">
+                {{this.orderStatusDescriptions[this.order.status]}}
+            </div>
+            <div class="detail">
+                <div class="date">
+                    <h3>Fecha y hora</h3>
+                    <div>
+                        <p>{{ this.order.date }}</p>
+                        <p>{{ this.order.time }}</p>
+                    </div>
+                </div>
+                <div class="total">
+                    <h3>Detalle</h3>
+                    <p>{{ this.order.detail }}</p>
+                </div>
+                <div class="restaurant">
+                    <h3>Restaurante</h3>
+                    <div class="restaurant-display">
+                        <img src="{{ order.restaurant.logo }}" alt="{{ order.restaurant.name }}">
+                        <div class="restaurant-info">
+                            <h3>{{ order.restaurant.name }}</h3>
+                            <p>{{ order.restaurant.location }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>
